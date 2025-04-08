@@ -1,0 +1,110 @@
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{sgamevar, tikz} % Game theory packages
+\usepackage{pgfplots}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Microeconom\'ia Aplicada (MAE)}
+\author{Ayudantia 1: Juegos Est\'aticos con informaci\'on completa \\ Profesor: Jose Manuel Paz y Mi\~no \\ Ayudante: Vicente Merrill}
+\date{}
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada, Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+% \usepackage{array, xcolor}
+% \usepackage{color,hyperref}
+% \definecolor{clemsonorange}{HTML}{EA6A20}
+% \hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+%===================Startup========================
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+
+1.- (Estrategias mixtas) Asuma tiene el siguiente juego. Se sabe que para el jugador 1, $p_{x}$ es la probabilidad de jugar X, $p_{y}$ es la probabilidad de jugar Y y $1-p_{x}-p_{y}$ es la probabilidad de jugar Z. Para el jugador 2, $q$ es la probabilidad de jugar X y $1-q$ es la probabilidad de jugar Y.
+
+\begin{center}
+	 \begin{game}{3}{2}[\textbf{1}][\textbf{2}]
+                  \>$X$         \>$Y$\\
+        $X$       \>$5,5$       \>$8,8$\\
+        $Y$       \>$9,9$       \>$2,2$\\
+        $Z$       \>$7,7$       \>$6,6$
+ \end{game}
+\end{center}
+
+\begin{enumerate}
+	\item Asuma $q=0.5$, ¿cu\'al es la mejor respuesta del jugador 1?
+	\item Asuma $p_{x} = 0.2$ y $p_{y} = 0.2$, ¿cu\'al es la mejor respuesta del jugador 2?
+	\item Encuentre todos los equilibrios de Nash (en estrategias puras y mixtas). 
+	\item De acuerdo a su respuesta anterior, calcule la probabilidad de cada ocurrencia de cada resultado para el equilibrio de Nash con estrategias mixtas.
+\end{enumerate}
+
+2.- (Un modelo de lobbying) Se tienen 2 grupos de interes (A y B), que buscan influenciar a una pol\'itica de gobierno. Cada uno tiene una preferencia de pol\'itica distinta. A prefiere pol\'itica 0 y B prefiere pol\'itica 1. Cada grupo decide la contribuci\'on monetaria a oficiales $s_{i} \in [0,1]$ para $i=A,B$. La pol\'itica de gobierno esta influenciada de la siguiente manera
+\begin{align*}
+	x(s_{A},s_{B}) = 0.5 - s_{A} + s_{B}
+\end{align*} por lo que si ning\'un grupo contribuye se ejecuta la politica $0.5$. Finalmente, los grupos de interes tienen la siguiente funci\'on de utilidad
+\begin{align*}
+	u_{A}(s_{A},s_{B}) &= -(x(s_{A},s_{B}))^{2} - s_{A} \\
+	u_{B}(s_{A},s_{B}) &= -(1 - x(s_{A},s_{B}))^{2} - s_{B}
+\end{align*}
+
+\begin{enumerate}
+	\item Encuentre el/los equilibrios de Nash.
+	\item ¿Existe alg\'un equilibrio de Nash que Pareto domine al resto?
+\end{enumerate}
+
+3.- (Describiendo el espacio de utilidades posibles) Asuma el siguiente juego.
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$L$         \>$R$      \\
+        $U$       \>$6,6$       \>$2,7$    \\
+        $D$       \>$7,2$       \>$0,0$     
+ \end{game}
+ \end{center}
+
+\begin{enumerate}
+	\item Encuentre todos los equilibrios de Nash (en estrategias puras y mixtas) y grafique el convex hull de equilibrios de Nash.
+	\item Caracterice las condiciones que debe cumplir un equilibrio correlacionado. ¿Es posible encontrar un equilibrio correlacionado fuera del convex hull de equilibrios de Nash?
+\end{enumerate}
+
+\end{document}  

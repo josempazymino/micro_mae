@@ -1,0 +1,143 @@
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[spanish]{babel}
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Micreconom\'ia Aplicada (MAE)}
+\author{Jos\'e Manuel Paz y Mi\~no}
+\date{Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage[mmddyyyy]{datetime}% http://ctan.org/pkg/datetime
+\usepackage{advdate}% http://ctan.org/pkg/advdate
+\newdateformat{syldate}{\twodigit{\THEMONTH}/\twodigit{\THEDAY}}
+\newsavebox{\MONDAY}\savebox{\MONDAY}{Mon}% Mon
+\newcommand{\week}[1]{%
+%  \cleardate{mydate}% Clear date
+% \newdate{mydate}{\the\day}{\the\month}{\the\year}% Store date
+  \paragraph*{\kern-2ex\quad #1, \syldate{\today} - \AdvanceDate[4]\syldate{\today}:}% Set heading  \quad #1
+%  \setbox1=\hbox{\shortdayofweekname{\getdateday{mydate}}{\getdatemonth{mydate}}{\getdateyear{mydate}}}%
+  \ifdim\wd1=\wd\MONDAY
+    \AdvanceDate[7]
+  \else
+    \AdvanceDate[7]
+  \fi%
+}
+\usepackage{setspace}
+\usepackage{multicol}
+%\usepackage{indentfirst}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\usepackage{natbib}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada (MAE)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+\usepackage{array, xcolor}
+\usepackage{color,hyperref}
+\definecolor{clemsonorange}{HTML}{EA6A20}
+\hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+\begin{tabular*}{.93\textwidth}{@{\extracolsep{\fill}}lr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify information %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+E-mail: \texttt{jpazm@fen.uchile.cl} & Web: Canvas / Mis Cursos FEN  \\
+
+ Oficina: 1503 \\
+ Horas de Oficina: Agendar por correo &  D\'ias y Horas: Mar/Jue 08:00-09:20 \\
+ & \\
+% Lab Room: ... & Lab Hours: W 3-5pm \\
+% &  \\
+\hline
+\end{tabular*}
+
+\vspace{5 mm}
+
+% First Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Descripci\'on}
+
+Este es el primer curso de microeconom\'ia del Magister en Econom\'ia Aplicada. El curso tiene 2 prop\'ositos: i. repasar y extender los principales desaarrollos te\'oricos de teor\'ia de juegos y ii. enfatizar aplicaciones pasando por organizaci\'on industrial, econom\'ia politica, salud, contratos, medio ambiente, entre otros. Se espera que el alumno/a no solo pueda identificar los principales modelos te\'oricos de su campo de interes, si no que tambien sea capaz de modificarlos y aumentarlos seg\'un sus requerimientos.
+
+\bigskip
+
+% Second Section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Evaluaciones}
+2 evaluaciones en clase (solemne y examen final) con un peso de 30\% cada uno en la nota final. 2 tareas para la casa ha realizarse en grupos de 2 con un peso de 10\% cada una en la nota final. Adicionalmente, un proyecto de investigaci\'on (tambi\'en en grupos de 2) con un peso de 20\%. M\'as detalles sobre el proyecto de investigaci\'on se daran en clase.
+
+\section*{Horarios de Oficina}
+Coordinar por correo.
+
+\section*{Prerrequisitos}
+En general, tener conocimientos s\'olidos de teor\'ia de juegos (lo que en la FEN corresponde al curso de Econom\'ia Aplicada).
+
+\section*{Temas y Referencias}
+
+\begin{enumerate}
+
+  \item T\'opico 0 Introducci\'on.
+
+  \item T\'opico 1 Juegos est\'aticos con informaci\'on completa. Referencias: \cite{osborne1994course} (2,3), \cite{fudenberg1991game} (1,2), \cite{tadelis2013game} (3,5,6), \cite{kreps2023microeconomic} (A9).
+
+  \item T\'opico 2 Juegos din\'amicos con informaci\'on completa. Referencias: \cite{osborne1994course} (6,7), \cite{fudenberg1991game} (3), \cite{tadelis2013game} (7,8,9), \cite{kreps2023microeconomic} (A10-A11).
+
+
+  \item T\'opico 3 Juegos est\'aticos con informaci\'on incompleta. Referencias: \cite{osborne1994course} (2.6), \cite{fudenberg1991game} (6), \cite{tadelis2013game} (12).
+
+
+  \item T\'opico 4 Juegos din\'amicos con informaci\'on incompleta. Referencias: \cite{osborne1994course} (11-12), \cite{fudenberg1991game} (8), \cite{tadelis2013game} (15,16,18), \cite{kreps2023microeconomic} (A9).
+
+
+  \item T\'opico 5 Juegos repetidos. Referencias: \cite{osborne1994course} (8), \cite{fudenberg1991game} (4,5), \cite{tadelis2013game} (10,11), \cite{kreps2023microeconomic} (A15).
+
+  \item T\'opico 6 Otros (reputaci\'on, contratos). Referencias: A determinar.
+\end{enumerate}
+
+Otras referencias \'utiles son \cite{mas1995microeconomic}, \cite{mailath2006repeated}, \cite{kartiklecture2012} y \cite{mailath2018modeling}.
+
+\bibliographystyle{ecca}
+\bibliography{references_micro_mae}
+
+
+
+\end{document}

@@ -1,0 +1,113 @@
+
+
+\documentclass[notes, 11pt]{beamer} % THIS
+% \documentclass[notes, 11pt]{beamer}
+% \documentclass[notes, 11pt, aspectratio=169]{beamer}
+
+% \usepackage{helvet}
+% \usepackage[default]{lato}
+% \usepackage{array}
+
+
+% \documentclass[handout]{beamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm]
+
+\usepackage{bbm}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage[percent]{overpic}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+\usepackage{subfig} % Manipulation and reference of small or sub figures and tables
+
+\setbeamertemplate{theorems}[numbered] % to number
+% \usetheme{Malmoe}
+\usetheme{default}
+% \usecolortheme{whale}
+\usecolortheme{rose}
+
+
+\newtheorem{defi}{Definition}
+\newtheorem{teo}{Theorem}
+\newtheorem{remi}{Remark}
+\newtheorem{exi}{Example}
+\newtheorem{propi}{Proposition}
+\newtheorem{proteo}{Proof}
+\newtheorem{lemi}{Lemma}
+\newtheorem{prolemi}{Proof}
+\newtheorem{propropi}{Proof}
+\newtheorem{coro}{Corollary}
+\newtheorem{proci}{Algorithm}
+\newtheorem{ass}{Assumption}
+
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}%
+
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+% \usepackage{enumitem}
+
+\usepackage[spanish]{babel}
+
+% \renewcommand{\baselinestretch}{1}
+% \expandafter\def\expandafter\insertshorttitle\expandafter{%
+%   \insertshorttitle\hfill%
+%   \insertframenumber\,/\,\inserttotalframenumber}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+\title{Microeconom\'ia Aplicada (MAE)}   
+\subtitle{Teor\'ia de Juegos: Juegos Estaticos con Informacion Completa}   
+\author[Paz y Mino ]{Jos\'e Manuel Paz y Mi\~no}
+\institute[shortinst]{FEN UCHILE}
+\date{Oto\~no 2025} 
+
+\frame{\titlepage} 
+
+
+
+\begin{frame}{Dragu, T. (2011)}
+	\begin{wideitemize}
+		\item<1-> Motivaci\'on: 
+		\begin{wideitemize}
+		\item<2->[--] Ataques terroristas incrementan vigilancia por parte de gobiernos.
+		\item<3->[--] Esta vigilancia se traduce en menor privacidad y mayor monitoreo de actividades.
+		\item<4->[--] Menos privacidad genera menos terrorismo?
+		\end{wideitemize}
+		\item<5-> Resultados
+		\begin{wideitemize}
+			\item<6->[--] Menor privacidad puede incrementar actividad terrorista.
+			\item<7->[--] Una agencia antiterrorista siempre prefiere menos privacidad.
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Dragu, T. (2011)}
+	\begin{wideitemize}
+		\item<1-> Mecanismos:
+		\begin{wideitemize}
+			\item<2-> Efectos directos (costos) e indirectos (estrat\'egicos) de mayor privacidad.
+			\item<3-> Para terroristas ambos efectos van en misma direcci\'on.
+			\item<4-> Para agencia antiterrorista van en sentidos opuestos.
+		\end{wideitemize}
+
+	\end{wideitemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\end{document}

@@ -1,0 +1,328 @@
+#! python
+
+
+def build(ctx):
+	
+	##################################
+	##################################
+	# 0 = all
+	# 1 = only 2020
+	# 2 = only first 19 weeks of 2020
+	# 3 = december 2019 and 19 weeks of 2020
+	select_period = '3'
+	distance      = '1.0'
+	##################################
+	##################################
+	
+	# Analysis of demographics of markets and numbers
+	# For potential markets and actual markets
+	# Works with OVER/NOVER markets
+	###########################################################################	
+	
+	"""
+	ctx(
+	features ='run_py_script',
+	source   ='demo_number_markets.py',
+	target   =[
+	ctx.path_to(ctx, 'OUT_FIGURES', 'heatmap_demo.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'hist_nstores.pdf'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_markets_demo.tex'),	
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_markets_spec.tex')
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'data_utility_over_agg_upc.csv'),
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'data_utility_nover_agg_upc.csv')
+	],
+	append = [distance],
+	name='clean_demo_markets'
+	)
+	"""
+	
+	"""
+	
+	# Analysis of price and utility distributions
+	# U P C
+	###########################################################################
+	ctx(
+	features ='run_py_script',
+	source   ='utility_plots_tables.py',
+	target   =[
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_over_sdprice.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_over_sdut.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_over_rangeprice.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_over_rangeut.tex'),	
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_nover_sdprice.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_nover_sdut.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_nover_rangeprice.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_market_nover_rangeut.tex')],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'data_utility_over_agg_basket.csv'),
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'data_utility_nover_agg_basket.csv'),
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'data_final_upc_residual.csv')
+	],
+	append = [distance],
+	name='clean_utility_plots_upc'
+	)
+	
+###############################################################################
+###############################################################################
+
+	# Analysis of search cost distributions, c_k, F(c_k), expected search
+	# TODO: Expected Search
+	# cs 0, ps 1, ts 2, log 3
+	###########################################################################
+	for ie in [0,1,2,3]:
+		for ic in ['over', 'nover']:
+			for it in ['upc']:
+				
+				ctx(
+				features ='run_py_script',
+				source   ='structural_tables.py',
+				target   =[
+				ctx.path_to(ctx, 'OUT_FIGURES', 'hist_covidshares_' + ic +'_'+ it + '_' + str(ie) + '.pdf'),
+				#ctx.path_to(ctx, 'OUT_FIGURES', 'hist_r2shares_' + ic +'_'+ it +'.pdf'),
+				#ctx.path_to(ctx, 'OUT_TABLES' , 'table_search_cost_' + ic +'_'+ it +'.tex'),
+				#ctx.path_to(ctx, 'OUT_TABLES' , 'table_search_cost_dist_' + ic +'_'+ it +'.tex'),
+				ctx.path_to(ctx, 'OUT_TABLES' , 'table_shares_'+ ic +'_'+ it + '_' + str(ie) + '.tex')
+				],
+				deps     =[
+				ctx.path_to(ctx, 'OUT_ANALYSIS', 'structural_results_'+ ic + '_' + it + '_end.csv'),
+				#ctx.path_to(ctx, 'OUT_ANALYSIS', 'data_utility_'+ ic + '_' + 'agg_'+ it +'.csv'),
+				],
+				append = [ic, it, ie],
+				name='clean_structural_tables_'+ ic + '_' + it + '_' + str(ie)
+				)
+				
+	"""
+
+###############################################################################
+###############################################################################
+
+# This might be useful later. Probably no.
+
+	"""
+	# Analysis of rank reversals in price; figures
+	# B A S K E T
+	# TODO: UPC
+	###########################################################################
+	ctx(
+	features ='run_py_script',
+	source   ='rank_reversal_plot.py',
+	target   =[
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'rank_data_prices_basket.csv')
+	],
+	append = [distance],
+	name='clean_rank_reversal_plot'
+	)
+	"""
+
+###############################################################################
+###############################################################################
+
+	"""
+	# Analysis of Delta Bar
+	###########################################################################
+	ctx(
+	features ='run_py_script',
+	source   ='structural_delta_tables.py',
+	target   =[
+	#ctx.path_to(ctx, 'OUT_FIGURES', 'hist_covidshares.pdf'),
+	#ctx.path_to(ctx, 'OUT_TABLES' , 'table_search_cost.tex'),
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'structural_merged_nonf_delta.csv')
+	],
+	append = [distance],
+	name='clean_structural_delta_tables'
+	)
+	"""
+	
+	"""
+	# Search Cost Interpolation
+	###########################################################################
+	ctx(
+	features ='run_py_script',
+	source   ='search_cost_interpolation.py',
+	target   =[
+	ctx.path_to(ctx, 'OUT_TABLES' , 'table_percentiles_search_cost.tex')
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'prepared_for_qr.csv'),
+	],
+	name='clean_search_cost_interpolation'
+	)
+	"""
+	
+	"""
+	# Main stats by product, market and period
+	# Given that we have nh characteristics, we can merge these depending on location of stores
+	###########################################################################################
+	# mdistance includes 0.5, 1.0 or 1.5 options (km)
+	mdistance = '1.0'
+	ctx(
+	features ='run_py_script',
+	source   ='stats_markets.py',
+	target   =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'all_market_stats.csv'),
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_DATA', 'list_markets.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'total_data_end.csv')	
+	],
+	append = [mdistance, select_period],
+	name='clean_stats_markets'
+	)
+	
+	# Tables for analysis 
+	##################################
+	ctx(
+	features ='run_py_script',
+	source   ='map_alt.py',
+	target   =[
+	ctx.path_to(ctx, 'OUT_FIGURES', 'figure_stores.png')	
+	],
+	deps     =[
+	ctx.path_to(ctx, 'IN_DATA', 'ferias_mvd.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'stores_loc.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'clean_stores.csv'),	
+	],
+	name='clean_makes_map'
+	)
+	
+	# Figures for analysis: market
+	##################################
+	ctx(
+	features ='run_r_script',
+	source   ='makes_figures_market.r',
+	target   =[
+	ctx.path_to(ctx, 'OUT_FIGURES', 'all_market_gs.pdf')	,
+	ctx.path_to(ctx, 'OUT_FIGURES', 'all_market_nstores.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'all_market_stdlog.pdf'),	
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_marketskm.tex'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'all_market_gs_covid_0.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'all_market_gs_covid_1.pdf')	
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_ANALYSIS', 'all_market_stats.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'list_markets.csv')	,
+	ctx.path_to(ctx, 'OUT_DATA', 'did_id.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'closer_stores.csv')	
+	],
+	append = select_period,
+	name='clean_makes_figures_market'
+	)		
+	
+	# Figures for analysis: rank
+	##################################
+	ctx(
+	features ='run_r_script',
+	source   ='makes_figures_rank.r',
+	target   =[
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_big_cat_covid.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'std_big_cat_covid.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_covid_closeness.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'std_covid_closeness.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'ranks_big_cat_covid.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'ranks_covid_closeness.pdf'),
+	ctx.path_to(ctx, 'OUT_TABLES',  'table_rank_zeros.tex'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_zeros_summary.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_idproduct_distance.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_idproduct_distance_sameret.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_idproduct_distance_covid.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_ecf_covid_close.pdf'), #
+	ctx.path_to(ctx, 'OUT_FIGURES', 'rank_ecf_covid_same_ret.pdf') #	
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_DATA', 'rank_data_prices.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'closer_stores.csv')	
+	
+	],
+	append = select_period,
+	name='clean_makes_figures_rank'
+	)	
+	
+	# Figures for traffic
+	# At the moment, we only have this information for 2020
+	# Add Nov, Dic
+	##################################	
+	ctx(
+	features ='run_r_script',
+	source   ='makes_traffic_did.r',
+	target   =[
+	ctx.path_to(ctx, 'OUT_FIGURES', 'traffic_treatment_index.pdf')
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_DATA', 'data_regression.csv')
+	],
+	append = select_period,
+	name='clean_makes_traffic'
+	)	
+	
+	# Tables for analysis
+	# Decide what type of constraints
+	##################################
+	ctx(
+	features ='run_r_script',
+	source   ='makes_tables.r',
+	target   =[
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_did_fm.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_did_com.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_pf.tex')	,
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_total.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_nh.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_corr_sc.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table_zones.tex')	
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_DATA', 'total_data_end.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'closer_stores.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'descriptivos_barrios.csv')	,
+	ctx.path_to(ctx, 'OUT_DATA', 'info_barrios.csv')	,
+	ctx.path_to(ctx, 'OUT_DATA', 'info_zonas.csv')		
+	],
+	append = select_period,
+	name='clean_makes_tables'
+	)	
+
+	# Figures for analysis: prices, var, promo
+	##################################
+	ctx(
+	features ='run_r_script',
+	source   ='makes_figures.r',
+	target   =[
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_pesos_categories.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_pesos_categories_stores.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_pesos_categories_stores_0.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_pesos_categories_stores_1.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_pesos_categories_ret.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_pesos_categories_ind.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_categories.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_dollar.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'var_nproduct.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'var_idproduct.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'bigcat_nproduct.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'bigcat_idproduct.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'ret_bigcat_idproduct.pdf'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'sales_bigcat_retailers.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'sales_retailers_bigcat.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_did.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_prod_fam_treatment_level.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_prod_fam_treatment_change.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'prices_stores_selected.pdf')	
+	],
+	deps     =[
+	ctx.path_to(ctx, 'OUT_DATA', 'total_data_end.csv'),
+	ctx.path_to(ctx, 'OUT_DATA', 'closer_stores.csv')
+	],
+	append = select_period,
+	name='clean_makes_figures'
+	)
+	
+	"""
+	
+	
+
+	
+	

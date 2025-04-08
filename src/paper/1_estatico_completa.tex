@@ -1,0 +1,681 @@
+
+
+\documentclass[notes, 11pt]{beamer} % THIS
+% \documentclass[notes, 11pt]{beamer}
+% \documentclass[notes, 11pt, aspectratio=169]{beamer}
+
+% \usepackage{helvet}
+% \usepackage[default]{lato}
+% \usepackage{array}
+
+
+% \documentclass[handout]{beamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm]
+
+\usepackage{bbm}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage[percent]{overpic}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+\usepackage{subfig} % Manipulation and reference of small or sub figures and tables
+
+\setbeamertemplate{theorems}[numbered] % to number
+% \usetheme{Malmoe}
+\usetheme{default}
+% \usecolortheme{whale}
+\usecolortheme{rose}
+
+
+\newtheorem{defi}{Definition}
+\newtheorem{teo}{Theorem}
+\newtheorem{remi}{Remark}
+\newtheorem{exi}{Example}
+\newtheorem{propi}{Proposition}
+\newtheorem{proteo}{Proof}
+\newtheorem{lemi}{Lemma}
+\newtheorem{prolemi}{Proof}
+\newtheorem{propropi}{Proof}
+\newtheorem{coro}{Corollary}
+\newtheorem{proci}{Algorithm}
+\newtheorem{ass}{Assumption}
+
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}%
+
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+% \usepackage{enumitem}
+
+\usepackage[spanish]{babel}
+
+% \renewcommand{\baselinestretch}{1}
+% \expandafter\def\expandafter\insertshorttitle\expandafter{%
+%   \insertshorttitle\hfill%
+%   \insertframenumber\,/\,\inserttotalframenumber}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+\title{Microeconom\'ia Aplicada (MAE)}   
+\subtitle{Teor\'ia de Juegos: Juegos Est\'aticos con Informacion Completa}   
+\author[Paz y Mino ]{Jos\'e Manuel Paz y Mi\~no}
+\institute[shortinst]{FEN UCHILE}
+\date{Oto\~no 2025} 
+
+\frame{\titlepage} 
+
+\begin{frame}{Introducci\'on}{Est\'atica vs. Din\'amica}
+	\begin{wideitemize}
+		\item<1-> Est\'atica: Jugadores deciden simult\'aneamente. No tomarlo literal. 
+		\begin{wideitemize}
+			\item<2->[--] Ej1: Jugador 1 decide un lunes si confiesa o no un crimen a la policia. Jugador 2 decide el martes por separado. Todav\'ia es un juego simult\'aneo.
+			\item<3->[--] Ej2: Jugadores tienen que escribir cuanto contribuir a un proyecto com\'un. Lo hacen por separado y escriben un papel el monto. La junta vecinal recibe estos papeles y en funci\'on al monto recaudado ejecuta el proyecto.
+		\end{wideitemize}
+
+		\item<4-> Din\'amica: Existen varias rondas de decisiones. En cada ronda, uno, algunos o todos los jugadores pueden decidir.
+		\begin{wideitemize}
+			\item<5->[--] Ej1: Ajedrez.
+			\item<6->[--] Ej2: Jugar cachip\'un 3 veces seguidas.
+		\end{wideitemize}
+
+		\item<7-> Diferencia entre decisi\'on y realizaci\'on del juego.
+
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Introducci\'on}{Informaci\'on Completa vs. Incompleta}
+	\begin{wideitemize}
+		\item<1-> Informaci\'on completa es tener \textit{common knowledge} sobre todos los elementos del juegos.
+		\begin{wideitemize}
+			\item<2->[--] ¿Qu\'e es \textit{common knowledge}? 
+		\end{wideitemize}
+
+		\item<3-> Informaci\'on incompleta es lo opuesto de lo anterior.
+		\begin{wideitemize}
+			\item<4->[--] Ej1: No se qu\'e decisi\'on tom\'o un jugador previamente.
+			\item<5->[--] Ej2: No conozco alg\'un par\'ametro de la funci\'on de utilidad de mi rival.
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Introducci\'on}{Representaci\'on}
+	\begin{wideitemize}
+		\item<1-> ¿Qu\'e necesitamos saber?:
+		\begin{wideitemize}
+			\item<2->[--] ¿Quienes son los jugadores?
+			\item<3->[--] ¿Qu\'e acciones pueden tomar?
+			\item<4->[--] ¿C\'omo valora cada jugador el resultado (de las acciones de todos)?
+			\item<5->[--] ¿Qu\'e conoce cada jugador?
+		\end{wideitemize}
+		\item<6-> Un juego es solo una forma de representar esta informaci\'on.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Introducci\'on}{Representaci\'on}
+	\begin{wideitemize}
+		\item<1-> Los juegos pueden expresarse usando:
+		\begin{wideitemize}
+			\item<2->[--] Forma estrategica o normal (matriz).
+			\item<3->[--] Forma extensiva (\'arbol).
+		\end{wideitemize}
+
+		\item<4-> Por lo general para juegos est\'aticos con informaci\'on completa se usa la forma estrat\'egica.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Elementos}
+		\begin{wideitemize}
+			\item<1-> N\'umero finito de jugadores $N$
+			\item<2-> Para cada $i \in N$, existe un set no vacio $A_{i}$ (acciones disponibles para el jugador $i$). Una acci\'on espec\'ifica se escribe como $a_{i}$ (donde $a_{i} \in A_{i}$).
+			\item<3-> Para cada $i \in N$, existe una relaci\'on de preferencia $\succsim_{i}$ para $A = \times_{j \in N} A_{j}$ (relaci\'on de preferencia para jugador $i$). En particular, esta relaci\'on de preferencia la aproximaremos por una funci\'on de utilidad para $i$. Adicionalmente, llamaremos perfil de acciones\footnote{Tambi\'en llamado perfil de estrategias} al elemento $a \in A$ y a $A$ el set de resultados.
+		\end{wideitemize}
+\end{frame}
+
+\iffalse
+\begin{frame}{Forma Estr\'ategica}{Ejemplo}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$P$         \>$A$\\
+        $E$       \>$-3,-1$       \>$1,1$\\
+        $NE$       \>$0,2$       \>$0,2$
+ \end{game}
+\end{center}
+\underline{Descripci\'on:} Jugador $1$ tiene que decidir si entra ($E$) o no ($NE$) a un mercado. Jugador $2$ puede pelear esa entrada ($P$) o acomodarse ($A$).
+\end{frame}
+
+\begin{frame}{Forma Estr\'ategica}{Ejemplo}
+\begin{wideitemize}
+	\item<1-> $N=\{1,2\}$
+	\item<2-> $A_{1} = \{E,NE\}$ y $A_{2} = \{P,A\}$ y $A = \{ (E,P), (E,A), (NE,P), (NE,A) \}$
+	\item<3-> Funciones de utilidad
+	\begin{align*}
+		U_{1}(a) = \begin{cases}
+		-3 &\text{ si } a = (E,P) \\
+		 1 &\text{ si } a = (E,A) \\
+		 0 &\text{ si } a = (NE,P) \\
+		 0 &\text{ si } a = (NE,A)
+		\end{cases}
+	\end{align*}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Estr\'ategica}{Ejemplo}
+\begin{wideitemize}
+	\item<1-> Funciones de utilidad
+	\begin{align*}
+		U_{2}(a) = \begin{cases}
+		-1 &\text{ si } a = (E,P) \\
+		 1 &\text{ si } a = (E,A) \\
+		 2 &\text{ si } a = (NE,P) \\
+		 2 &\text{ si } a = (NE,A)
+		\end{cases}
+	\end{align*}
+\end{wideitemize}
+\end{frame}
+\fi
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$C$         \>$D$\\
+        $C$       \>$3,3$       \>$0,5$\\
+        $D$       \>$5,0$       \>$1,1$
+ \end{game}
+\end{center}
+\underline{Descripci\'on:} $2$ prisioneros desean no confesar ($C$) or confesar ($D$).
+\end{frame}
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+\begin{wideitemize}
+	\item<1-> $N=\{1,2\}$
+	\item<2-> $A_{1} = \{C,D\}$ y $A_{2} = \{C,D\}$ y $A = \{ (C,C), (C,D), (D,C), (D,D) \}$
+	\item<3-> Funciones de utilidad
+	\begin{align*}
+		U_{1}(a) = \begin{cases}
+		 3 &\text{ si } a= (C,C) \\
+		 0 &\text{ si } a= (C,D) \\
+		 5 &\text{ si } a= (D,C) \\
+		 1 &\text{ si } a= (D,D)
+		\end{cases}
+	\end{align*}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+\begin{wideitemize}
+	\item<1-> Funciones de utilidad
+	\begin{align*}
+		U_{2}(a) = \begin{cases}
+		3 &\text{ si } a= (C,C) \\
+		5 &\text{ si } a= (C,D) \\
+		0 &\text{ si } a= (D,C) \\
+		1 &\text{ si } a= (D,D)
+		\end{cases}
+	\end{align*}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Equilibrio de Nash}
+	\begin{wideitemize}
+		\item Un equilibrio de Nash de un juego estrat\'egico $\big< N, (A_{i}), (U_{i})\big>$ es un perfil $a^{*} \in A$ con la propiedad de que para cada jugador $i \in N$ tenemos
+		\begin{align*}
+			U_{i}(a_{i}^{*},a_{-i}^{*}) \geq U_{i}(a_{i},a_{-i}^{*}) \text{ para todo } a_{i} \in A_{i}
+		\end{align*}
+		\item Esto quiere decir que para que $a^{*}$ sea un equilibrio de Nash debe darse que ning\'un jugador $i$ tiene una acci\'on $a_{i}$ preferida a $a_{i}^{*}$ cuando el resto de jugadores elige $a_{-i}^{*}$.
+		\item En otras palabras, ning\'un jugador tiene incentivos a desviarse tomando en cuenta las acciones de los otros jugadores.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+	\begin{wideitemize}
+		\item Asumir $a^{*} = (C,D)$.
+		\begin{wideitemize}
+			\item[--] $U_{1}(C,D) = 0 < U_{1}(D,D) = 1$, por lo que a $1$ le convendr\'ia desviarse de este perfil.
+			\item[--] $U_{2}(C,D) = 5 > U_{2}(C,C) = 3$, por lo que a $2$ no le convendr\'ia desviarse de este perfil.
+		\end{wideitemize}
+		\item Asumir $a^{*} = (D,C)$.
+		\begin{wideitemize}
+			\item[--] $U_{1}(D,C) = 5 > U_{1}(C,C) = 3$, por lo que a $1$ no le convendr\'ia desviarse de este perfil.
+			\item[--] $U_{2}(D,C) = 0 < U_{2}(D,D) = 1$, por lo que a $2$ le convendr\'ia desviarse de este perfil.
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+	\begin{wideitemize}
+		\item Asumir $a^{*} = (C,C)$.
+		\begin{wideitemize}
+			\item[--] $U_{1}(C,C) = 3 < U_{1}(D,C) = 5$, por lo que a $1$ le convendr\'ia desviarse de este perfil.
+			\item[--] $U_{2}(C,C) = 3 < U_{2}(C,D) = 5$, por lo que a $2$ le convendr\'ia desviarse de este perfil.
+		\end{wideitemize}
+		\item Asumir $a^{*} = (D,D)$.
+		\begin{wideitemize}
+			\item[--] $U_{1}(D,D) = 1 > U_{1}(C,D) = 0$, por lo que a $1$ no le convendr\'ia desviarse de este perfil.
+			\item[--] $U_{2}(D,D) = 1 < U_{2}(D,C) = 0$, por lo que a $2$ no le convendr\'ia desviarse de este perfil.
+		\end{wideitemize} por lo tanto solo en $a^{*} = (D,D)$ ning\'un jugador tiene incentivos a desviarse, por lo que ese perfil es un equilibrio de Nash.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Mejor Respuesta}
+	\begin{wideitemize}
+		\item Para cada $a_{-i} \in A_{-i}$ definir $B(a_{-i})$, el set de las mejores acciones que puede tomar el jugador $i$ (dado $a_{-i}$)
+		\begin{align*}
+			B_{i}(a_{-i}) = \{ a_{i} \in A_{i}: U_{i}(a_{i},a_{-i}) \geq U_{i}(a_{i}',a_{-i}) \forall a_{i}' \in A_{i} \}
+		\end{align*}
+		\item Esto quiere decir que $B_{i}(a_{-i})$ indica las mejores acciones que hace el jugador $i$ dado $a_{-i}$.
+		\item Entonces un equilibrio de Nash es un perfil $a^{*}$ tal que
+		\begin{align*}
+			a_{i}^{*} \in B_{i}(a_{-i}^{*}) \forall i \in N
+		\end{align*}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+	\begin{wideitemize}
+		\item Asumir $a^{*} = (C,D)$.
+		\begin{wideitemize}
+			\item[--] $B_{1}(D) = D$, entonces $C \notin B_{1}(D)$
+			\item[--] $B_{2}(C) = D$, entonces $D \in B_{2}(C)$
+		\end{wideitemize}
+		\item Asumir $a^{*} = (D,C)$.
+		\begin{wideitemize}
+			\item[--] $B_{1}(C) = D$, entonces $D \in B_{1}(C)$
+			\item[--] $B_{2}(D) = D$, entonces $C \notin B_{2}(D)$
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo}{Dilema del Prisionero}
+	\begin{wideitemize}
+		\item Asumir $a^{*} = (C,C)$.
+		\begin{wideitemize}
+			\item[--] $B_{1}(C) = D$, entonces $C \notin B_{1}(C)$
+			\item[--] $B_{2}(C) = D$, entonces $C \notin B_{2}(C)$
+		\end{wideitemize}
+		\item Asumir $a^{*} = (D,D)$.
+		\begin{wideitemize}
+			\item[--] $B_{1}(D) = D$, entonces $D \in B_{1}(D)$
+			\item[--] $B_{2}(D) = D$, entonces $D \in B_{2}(D)$
+		\end{wideitemize} por lo tanto $a^{*} = (D,D)$ es un equilibrio de Nash en tanto se cumple $a_{i}^{*} \in B_{i}(a_{-i}^{*})$ para $i \in N$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Equilibrio de Nash}{Discusi\'on}
+\begin{wideitemize}
+	\item<1-> Equilibrios de Nash son consistentes. Si todos los jugadores predicen que se de, entonces ning\'un jugador tiene incentivos a jugar diferente.
+	\item<2-> Esta consistencia no existe para otros perfiles de acciones.
+	\item<3-> Que los equilibrios de Nash sean consistentes no significa que sean los mejores y/o parecido.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{M\'as ejemplos}{¿Bach o Stravinsky?}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$B$         \>$S$\\
+        $B$       \>$2,1$       \>$0,0$\\
+        $S$       \>$0,0$       \>$1,2$
+ \end{game}
+\end{center}
+\underline{Descripci\'on:} $2$ personas quieren ir a un concierto de m\'usica cl\'asica juntas. Pero una prefiere ($B$) y la otra ($S$). Quieren coordinar sus acciones pero tienen intereses distintos.
+\end{frame}
+
+\begin{frame}{M\'as ejemplos}{¿Mozart o Mahler?}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$Mo$         \>$Ma$\\
+        $Mo$       \>$2,2$       \>$0,0$\\
+        $Ma$       \>$0,0$       \>$1,1$
+ \end{game}
+\end{center}
+\underline{Descripci\'on:} Historia similar a Bach o Stravinsky. Cu\'al es la diferencia?
+\end{frame}
+
+\begin{frame}{M\'as ejemplos}{¿Halc\'on o Paloma?}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$P$         \>$H$\\
+        $P$       \>$3,3$       \>$1,4$\\
+        $H$       \>$4,1$       \>$0,0$
+ \end{game}
+\end{center}
+\underline{Descripci\'on:} Animales pelean por presas. Pueden ser agresivos ($H$, halc\'on) o pasivos ($P$, paloma). Si uno es $H$, le conviene que el rival sea 
+$P$ (y viceversa). Adicionalmente, si ambos son $P$ es mejor a que si ambos son $H$.
+\end{frame}
+
+\begin{frame}{M\'as ejemplos}{Jugando con Pesos}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$C$         \>$S$\\
+        $C$       \>$1,-1$       \>$-1,1$\\
+        $S$       \>$-1,1$       \>$1,-1$
+ \end{game}
+\end{center}
+\underline{Descripci\'on:} $2$ personas lanzan pesos (Cara o Sello). Si las decisiones son distintas, el jugador $1$ le da a $2$ un peso. Si las decisiones son iguales, el jugador 
+$2$ le da a $1$ un peso. 
+\end{frame}
+
+\begin{frame}{Optimalidad de Pareto}
+\begin{wideitemize}
+	\item<1-> Se dice que un perfil de acciones $a''$ es una mejora de Pareto respecto de $a'$ si se cumple 
+	\begin{wideitemize}
+		\item<2->[--] Para todo $i$, $u_{i}( a_{i}'',a_{-i}'' ) \geq u_{i}( a_{i}',a_{-i}' )$
+		\item<3->[--] y para al menos un $i$, $u_{i}( a_{i}'',a_{-i}'' ) > u_{i}( a_{i}',a_{-i}' )$.
+	\end{wideitemize}
+
+	\item<4-> En ese sentido, pueden existir perfiles de acciones $\hat{a} \in A$ que sean mejora de Pareto respecto de un equilibrio de Nash $a^{*}$.
+
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Selecci\'on de Equilibrios}
+\begin{wideitemize}
+	\item<1-> ¿Qu\'e hacemos si tenemos m\'ultiples equilibrios de Nash? Nada. \textit{A feature, not a bug.}
+	\begin{wideitemize}
+		\item<2->[--] (Pareto Dominancia) Se dice que $a^{*} \in \text{NE}$ Pareto domina a $a^{**} \neq a^{*} \in \text{NE}$ si $a^{*}$ es una mejora de Pareto respecto de $a^{**}$.\footnote{Si ningun otro equilibrio Parero domina a $a^{*}$, entonces $a^{*}$ es Pareto \'optimo.}
+		\item<3->[--] (\textit{Risk Dominance}) Se dice que $a^{*} \in \text{NE}$ domina en riesgo a $a^{**} \neq a^{*} \in \text{NE}$ si la p\'erdida total en utilidad de moverse de $a^{**}$ a $a^{*}$,
+		\begin{align*}
+			[u_{1}(a_{1}^{*}, a_{2}^{*}) - u_{1}(a_{1}^{**}, a_{2}^{*})] \times [u_{1}(a_{1}^{*}, a_{2}^{*}) - u_{1}(a_{1}^{*}, a_{2}^{**})]
+		\end{align*} excede la de mov erse de $a^{*}$ a $a^{**}$,
+		\begin{align*}
+			[u_{1}(a_{1}^{**}, a_{2}^{**}) - u_{1}(a_{1}^{*}, a_{2}^{**})] \times [u_{1}(a_{1}^{**}, a_{2}^{**}) - u_{1}(a_{1}^{**}, a_{2}^{*})]
+		\end{align*}
+	\end{wideitemize}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Selecci\'on de Equilibrios}{¿Mozart o Mahler?}
+\begin{wideitemize}
+	\item<1-> Pareto Dominancia: $(Mo,Mo)$ Pareto domina a $(Ma,Ma)$ y tambien es Pareto \'optimo.
+
+	\item<2-> \textit{Risk Dominance}: 
+	\begin{wideitemize}
+		\item<3->[--] De $(Mo,Mo)$ a $(Ma,Ma)$
+		\begin{align*}
+			[1 - 0] \times [1 - 0] = 1
+		\end{align*} y de $(Ma,Ma)$ a $(Mo,Mo)$
+		\begin{align*}
+			[2 - 0] \times [2 - 0] = 4
+		\end{align*} entonces $(Mo,Mo)$ domina en riesgo a $(Ma,Ma)$.
+	\end{wideitemize}
+	%\item<4-> (Pregunta) Aplica la selecci\'on de equilibrios para Halc\'on o Paloma y Bach o Stravinsky.
+\end{wideitemize}
+
+\end{frame}
+
+\begin{frame}{Espacio de Acciones Continuo}
+\begin{wideitemize}
+	\item<1-> Imagine se tiene $U_{i}(a_{i},a_{-i})$ como funci\'on de utilidad con infinitas posibles acciones $a$ recogidas en el set $A_{i}$.
+	\item<2-> En ese sentido, para resolver sabemos que dado un valor cualquier de $a_{-i}$,
+	\begin{align*}
+		U\left( a_{i}^{*}\left(a_{-i}\right), a_{-i}  \right) = & \max _{ a_{i} \in A_{i} } U_{i}\left( a_{i}, a_{-i} \right) \\
+		a_{i}^{*}\left(a_{-i}\right) =& \argmax _{ a_{i} \in A_{i} } U_{i}\left( a_{i}, a_{-i} \right) = B_{i} \left( a_{-i} \right)
+	\end{align*}
+	\item<3-> Y tomando como fijo $a_{-i}$, derivamos con respecto a $a_{i}$ e igualamos a $0$ (Condici\'on de 1er Orden). Esto nos da la mejor respuesta del jugador $i$  como una funci\'on de las acciones del resto de jugadores $\left( a_{i}^{*}\left(a_{-i}\right)  \right)$. 
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Espacio de Acciones Continuo}
+\begin{wideitemize}
+	\item<1-> Un equilibrio de Nash es un perfil $a^{*} \in A$ tal que satisface: $a_{i}^{*} = B_{i}(a_{-i}^{*})$ para todo $i \in N$. Es decir, es la soluci\'on a un sistema de ecuaciones con $N$ inc\'ognitas.
+	\item<2-> Al existir un espacio continuo de acciones, no es posible representar en una matriz. Pero si elegimos un perfil $\hat{a} \in A$ tal que $\hat{a} \neq a^{*}$ y asumiendo $N=2$ entonces
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$ a_{2}^{*} $         \>$ \hat{a}_{2} $\\
+        $a_{1}^{*}$       \>$U_{1}\left(a_{1}^{*},a_{2}^{*}\right) ,U_{2}\left(a_{1}^{*},a_{2}^{*}\right)$     \>$U_{1}\left(a_{1}^{*},\hat{a}_{2}\right) ,U_{2}\left(a_{1}^{*},\hat{a}_{2}\right)$\\
+        $\hat{a}_{1}$     \>$U_{1}\left(\hat{a}_{1},a_{2}^{*}\right),U_{2}\left(\hat{a}_{1},a_{2}^{*}\right)$  \>$U_{1}\left(\hat{a}_{1},\hat{a}_{2}\right) ,U_{2}\left(\hat{a}_{1},\hat{a}_{2}\right)$
+ \end{game}
+\end{center}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Espacio de Acciones Continuo}{Cournot}
+\begin{wideitemize}
+	\item<1-> Modelo Cournot. Modelo b\'asico de Organizaci\'on Industrial
+	\item<2-> Competencia en cantidades.
+	\item<3-> Para simplificar, asumir duopolio
+	\begin{align*}
+		\text{max}_{ q_{i} } \left(P( Q ) - c_{i}\right)q_{i}
+	\end{align*} con $P(Q) = 1 - q_{i} - q_{j}$
+	\item<4-> Resolver y graficar mejores respuestas.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Espacio de Acciones Continuo}{Cournot}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.68]{../../../src/original_data/notes3_figure1.png}
+\end{center}
+\label{fig:fig_1}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Espacio de Acciones Continuo}{M\'as ejemplos}
+\begin{wideitemize}
+	\item<1-> Bienes p\'ublicos.
+
+	\item<2-> \textit{Common Pool Resources}.
+\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Estrategias Mixtas}
+\begin{wideitemize}
+	\item<1-> Queremos extender el modelo a probabilidades.
+	\item<2-> No estas seguro sobre una acci\'on en particular, decides sobre probabilidades de realizar acciones. Igualmente, tus creencias sobre lo que hacen otros son probabilidades.
+	\item<3-> Entonces, $\Delta (A_{i})$ es el set de probabilidades de distribuci\'on sobre $A_{i}$ y $\alpha_{i} \in \Delta (A_{i})$ como una estrategia mixta (y $a_{i} \in A_{i}$ tambien se conoce como acci\'on pura).
+	\item<4-> Un perfil de estrategias mixtas $\alpha = (\alpha_{j})_{j \in N}$ induce una probabilidad sobre el set $A$.
+	\item<5-> Dada una estrategia mixta $\alpha_{i}$, decimos que la acci\'on $a_{i}$ se encuentra en el soporte de $\alpha_{i}$ si $\alpha_{i}(a_{i})>0$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}
+\begin{wideitemize}
+	\item<1-> Por lo tanto $U_{i}(\alpha) = \sum_{a \in A} (\Pi_{j \in N} \alpha_{j}(a_{j}) ) u_{i}(a) $.
+	\item<2-> Entonces un juego estrat\'egico $( N, (\Delta(A_{i})) , (U_{i}) )$ en donde $\Delta(A_{i})$ es el set de probabilidades sobre $A_{i}$ y $U_{i}: \times_{j \in N} \Delta(A_{i}) \rightarrow \mathbb{R} $.
+	\item<3-> Un Equilibrio de Nash es entonces un perfil de estrategias mixtas $\alpha^{*}$ tal que para todo $i \in N$:
+	\begin{align*}
+		U_{i}(\alpha^{*}_{i}, \alpha_{-i}) \geq U_{i}(\alpha_{i}, \alpha_{-i}) \text{ para todo } \alpha_{i} \in \Delta(A_{i})
+	\end{align*}
+	\item<4-> Si $\alpha^{*}$ es un equilibrio de Nash y $a'_{i}$ y $a_{i}''$ estan en el soporte de $\alpha_{i}^{*}$ entonces
+	\begin{align*}
+		EU_{i}(a_{i}',\alpha_{-i}^{*}) = EU_{i}(a_{i}'',\alpha_{-i}^{*}) = EU_{i}(\alpha_{i}^{*},\alpha_{-i}^{*})
+	\end{align*}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> La probabilidad de que $1$ elija Bach es igual a $p$ y la que $2$ lo haga es $q$.
+	\item<2-> Para cada jugador, se evalua la utilidad esperada de elegir cada acci\'on manteniendo fijo la estrategia mixta del rival.
+	\item<3-> 1: $EU_{1}(B;q) = qU_{1}(B,B) + (1-q)U_{1}(B,S) = 2q$ y $EU_{1}(S;q) = qU_{1}(S,B) + (1-q)U_{1}(S,S) = (1-q)$.
+	\item<4-> 2: $EU_{2}(B;p) = pU_{2}(B,B) + (1-p)U_{2}(S,B) = p$ y $EU_{2}(S;p) = pU_{2}(B,S) + (1-p)U_{2}(S,S) = 2(1-p)$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}{¿Bach o Stravinsky?}
+	\begin{wideitemize}
+		\item<1-> Por lo tanto para 1: Si $q=0$, $p=0$ o $S$; si $q=1$, $p=1$ o $B$; si $q=1/3$, $p \in [0,1]$.
+		\item<2-> Y para 2: Si $p=0$, $q=0$ o $S$; si $p=1$, $q=1$ o $B$; si $p=2/3$, $q \in [0,1]$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}{¿Bach o Stravinsky?}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.68]{../../../src/original_data/notes3_figure2.png}
+\end{center}
+\label{fig:fig_2}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Entonces, la utilidad esperada para 1 y 2: 
+	\begin{align*}
+		EU_{1}(p,q) =& pEU_{1}(B;q) + (1-p)EU_{1}(S;q) = \\
+		             & p(2q) + (1-p)(1-q) \\
+		EU_{2}(p,q) =& qEU_{2}(B;p) + (1-q)EU_{2}(S;p) = \\
+		             & q(p) + 2(1-q)(1-p)
+	\end{align*}
+	\item<2-> Y el beneficio esperado en cada equilibrio de Nash es
+	\begin{align*}
+		\text{ si } p = q = 0; EU_{1} = 1, EU_{2} = 2 \\
+		\text{ si } p = q = 1; EU_{1} = 2, EU_{2} = 1 \\
+		\text{ si } p = 2/3, q = 1/3; EU_{1} = 2/3, EU_{2} = 2/3
+	\end{align*}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Note que si 1 cree que 2 juega $q = 1/3$ su utilidad es constante para cualquier valor de $p$. Es decir $EU_{1}(p,1/3)$ es constante. 
+	\item<2-> \textbf{Es decir, si 1 cree que 2 randomiza, entonces tambien le conviene randomizar.}
+	\item<3-> Si lo anterior es cierto, porque 1 no elige $p=0$ o $p=1$? Porque si el jugador 2 tiene estos valores como creencia entonces su mejor respuesta ya no es $q=1/3$.
+	\item<4-> En ese sentido, las estrategias mixtas amplian lo que uno puede decidir y tambi\'en lo que uno cree que puede hacer el rival.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Mixtas}{Interpretaci\'on}
+\begin{wideitemize}
+	\item<1-> Jugadores usan estrategias que implican aleatoriedad (\textit{tiran dados}). Ello en tanto (como vimos antes) su utilidad esperada es constante.
+	\item<2-> ¿Pero tiene realmente que \textit{aleatorizar}?
+	\begin{wideitemize}
+		\item<3->[--] Basta con que los demas jugadores supongan que estoy aleatorizando.
+	\end{wideitemize}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}
+\begin{wideitemize}
+	\item<1-> Las estrategias mixtas suponen que los jugadores aleatorizan independientemente. Pero este tipo de estrategias pueden ser generalizas permitiendo correlaci\'on.
+	\item<2-> En otras palabras, imaginemos que los individuos dejan que acci\'on tomar a una entidad que recomienda $a \in A$ con cierta probabilidad $p(a)$ tal que $\sum_{ a \in A } p(a) = 1$. Es decir, pensemos en escenarios donde hay un mediador.
+	\item<3-> Entonces una distribucion de probabilidad $p$ es un equilibrio correlacionado si para todo $i$ y todos los $a_{i}$ elegidos con probabilidad positiva bajo $p$,
+	\begin{align*}
+		\sum_{a_{-i} \in A_{-i}}p(a_{-i}|a_{i})u_{i}(a_{i},a_{-i}) \geq \sum_{a_{-i} \in A_{-i}}p(a_{-i}|a_{i})u_{i}(a_{i}',a_{-i})
+	\end{align*} para todo $a_{i}' \in A_{i}$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}
+\begin{wideitemize}
+	\item<1-> Siendo m\'as precisos, los jugadores saben que la entidad va a seleccionar $a$ con probabilidad $p(a)$, pero cada jugador solo conoce la parte que le corresponde jugar del perfil $a$, es decir solo $a_{i}$.
+	\item<2-> Entonces, tenemos un equilibrio correlacionado si todos los jugadores siguen la recomendaci\'on de la entidad, dado que los dem\'as estan siguiendo sus recomendaciones.
+	\item<3-> Note que no hemos dicho nada sobre unicidad (es decir, pueden haber multiplicidad de equilibrios). Adicionalmente, el set de equilibrio correlacionados incluye a todos los equilibrios de Nash (en puras y mixtas).
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Jugador 1 se le recomienda $B$
+	\begin{wideitemize}
+		\item<2->[--] Jugador 1 sigue recomendaci\'on $B$
+		\begin{align*}
+			2\left(\frac{p_{BB}}{p_{BB}+p_{BS}}\right) + 0\left(\frac{p_{BS}}{p_{BB}+p_{BS}}\right)
+		\end{align*}
+		\item<3->[--] Jugador 1 no sigue recomendaci\'on (y hace $S$)
+		\begin{align*}
+			0\left(\frac{p_{BB}}{p_{BB}+p_{BS}}\right) + 1\left(\frac{p_{BS}}{p_{BB}+p_{BS}}\right)
+		\end{align*}
+	\end{wideitemize} 
+	\item<4-> Por lo tanto, sigue la recomendaci\'on si $2p_{BB}\geq p_{BS}$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Jugador 1 se le recomienda $S$
+	\begin{wideitemize}
+		\item<2->[--] Jugador 1 sigue recomendaci\'on $S$
+		\begin{align*}
+			0\left(\frac{p_{SB}}{p_{SB}+p_{SS}}\right) + 1\left(\frac{p_{SS}}{p_{SB}+p_{SS}}\right)
+		\end{align*}
+		\item<3->[--] Jugador 1 no sigue recomendaci\'on (y hace $B$)
+		\begin{align*}
+			2\left(\frac{p_{SB}}{p_{SB}+p_{SS}}\right) + 0\left(\frac{p_{SS}}{p_{SB}+p_{SS}}\right)
+		\end{align*}
+	\end{wideitemize} 
+	\item<4-> Por lo tanto, sigue la recomendaci\'on si $p_{SS}\geq 2p_{SB}$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Jugador 2 se le recomienda $B$
+	\begin{wideitemize}
+		\item<2->[--] Jugador 2 sigue recomendaci\'on $B$
+		\begin{align*}
+			1\left(\frac{p_{BB}}{p_{BB}+p_{SB}}\right) + 0\left(\frac{p_{SB}}{p_{BB}+p_{SB}}\right)
+		\end{align*}
+		\item<3->[--] Jugador 2 no sigue recomendaci\'on (y hace $S$)
+		\begin{align*}
+			0\left(\frac{p_{BB}}{p_{BB}+p_{SB}}\right) + 2\left(\frac{p_{SB}}{p_{BB}+p_{SB}}\right)
+		\end{align*}
+	\end{wideitemize} 
+	\item<4-> Por lo tanto, sigue la recomendaci\'on si $p_{BB}\geq 2p_{SB}$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Jugador 2 se le recomienda $S$
+	\begin{wideitemize}
+		\item<2->[--] Jugador 2 sigue recomendaci\'on $S$
+		\begin{align*}
+			0\left(\frac{p_{BS}}{p_{BS}+p_{SS}}\right) + 2\left(\frac{p_{SS}}{p_{BS}+p_{SS}}\right)
+		\end{align*}
+		\item<3->[--] Jugador 2 no sigue recomendaci\'on (y hace $B$)
+		\begin{align*}
+			1\left(\frac{p_{BS}}{p_{BS}+p_{SS}}\right) + 0\left(\frac{p_{SS}}{p_{BS}+p_{SS}}\right)
+		\end{align*}
+	\end{wideitemize} 
+	\item<4-> Por lo tanto, sigue la recomendaci\'on si $2p_{SS}\geq p_{BS}$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> Entonces, un equilibrio correlacionado debe cumplir con las siguientes condiciones
+	\begin{align*}
+		2p_{BB}	\geq p_{BS} \\
+		p_{SS}	\geq 2p_{SB} \\
+		p_{BB}	\geq 2p_{SB} \\
+		2p_{SS}	\geq p_{BS} 
+	\end{align*}
+
+	\item<2-> Existen multiples perfiles de acciones (en puras y mixtas) que cumplen con esta restricci\'on. En particular, todos los equilibrios de Nash deberian ser posibles de replicar.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Estrategias Correlacionadas}{¿Bach o Stravinsky?}
+\begin{wideitemize}
+	\item<1-> $(B,B)$ si $p_{BB} = 1$ y $p_{BS} = p_{SB} = p_{SS} = 0$.
+	\item<2-> $(S,S)$ si $p_{SS} = 1$ y $p_{BS} = p_{SB} = p_{BB} = 0$.
+	\item<3-> $p=2/3,q=1/3$ si $p_{BB} = 2/9$, $p_{BS} = 4/9$, $p_{SB} = 1/9$ y $p_{SS} = 2/9$.
+
+	\item<4-> Adicionalmente, es posible replicar otros perfiles de acciones fuera de los anteriores. ¿C\'omo?
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Algunos Ejemplos}
+	\begin{wideitemize}
+		\item<1-> Economia Pol\'itica: Dragu, T. (2011), ``Is There a Trade-off between Security and Liberty? Executive Bias, Privacy Protections, and Terrorism Prevention''
+		\item<2-> Historia Econ\'omica: Leeson, Peter (2011), ``Trial by Battle''
+		\item<3-> Econom\'ia del Crimen: Mialon, H. y Wiseman, T. (2005) ``The impact of gun laws: A model of crime and self-defense''
+		\item<4-> Teor\'ia Econ\'omica / Experimentos: Duffy, J. y Feltovich, N. (2010), ``Correlated Equilibria, Good and Bad: An Experimental Study''; P.A. Chiappori, S. Levitt, AND T. Groseclose (2002), ``Testing Mixed-strategy Equilibria''
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\end{document}

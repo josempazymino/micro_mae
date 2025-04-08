@@ -1,0 +1,677 @@
+
+
+\documentclass[notes, 11pt]{beamer} % THIS
+% \documentclass[notes, 11pt]{beamer}
+% \documentclass[notes, 11pt, aspectratio=169]{beamer}
+
+% \usepackage{helvet}
+% \usepackage[default]{lato}
+% \usepackage{array}
+
+
+% \documentclass[handout]{beamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm]
+
+\usepackage{bbm}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage[percent]{overpic}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+\usepackage{subfig} % Manipulation and reference of small or sub figures and tables
+
+\setbeamertemplate{theorems}[numbered] % to number
+% \usetheme{Malmoe}
+\usetheme{default}
+% \usecolortheme{whale}
+\usecolortheme{rose}
+
+
+\newtheorem{defi}{Definition}
+\newtheorem{teo}{Theorem}
+\newtheorem{remi}{Remark}
+\newtheorem{exi}{Example}
+\newtheorem{propi}{Proposition}
+\newtheorem{proteo}{Proof}
+\newtheorem{lemi}{Lemma}
+\newtheorem{prolemi}{Proof}
+\newtheorem{propropi}{Proof}
+\newtheorem{coro}{Corollary}
+\newtheorem{proci}{Algorithm}
+\newtheorem{ass}{Assumption}
+
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}%
+
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+% \usepackage{enumitem}
+
+\usepackage[spanish]{babel}
+
+% \renewcommand{\baselinestretch}{1}
+% \expandafter\def\expandafter\insertshorttitle\expandafter{%
+%   \insertshorttitle\hfill%
+%   \insertframenumber\,/\,\inserttotalframenumber}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+\title{Econom\'ia Aplicada}   
+\subtitle{Teor\'ia de Juegos: Juegos Repetidos}   
+\author[Paz y Mino ]{Jos\'e Manuel Paz y Mi\~no}
+\institute[shortinst]{FEN UCHILE}
+\date{\today} 
+
+\frame{\titlepage} 
+
+\begin{frame}{Introducci\'on}
+	\begin{wideitemize}
+		\item<1-> Hasta ahora hemos asumido que las interacciones se dan en un solo periodo (juegos en forma estrat\'egica) o bien secuencialmente en un n\'umero finito de etapas (forma extensiva).
+		\item<2-> Vamos a explorar otra serie de juegos en los cuales los jugadores juegan infin\'itamente
+		\item<3-> Esto nos va a ayudar a entender como econom\'ia teoriza sobre la posibilidad de cooperaci\'on.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Trincheras construidas con bandos contrarios frente a frente.
+		\item<2-> Ametralladoras, gases pimienta, granadas, etc. M\'ultiples opciones de matar al contrario.
+		\item<3-> Sin embargo, evidencia de que no se atacaban todo el tiempo. No solo por cuestiones de inventario, tambi\'en por \textit{humanidad.}
+		\item<4-> No ataques durante comidas, navidad, ataques con predictibilidad para que el otro se cubra, etc.
+		\item<5-> Vamos a explicar esto con teor\'ia de juegos.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> 2 jugadores: Aliados (L) y Alemanes (E). Existen 2 acciones que pueden hacer: disparar para matar (M) o disparar para fallar (F).
+		\item<2-> Asumamos que podemos organizar la informaci\'on en el siguiente juego estrat\'egico.
+
+		\begin{center}
+			 \begin{game}{2}{2}[\textbf{L}][\textbf{E}]
+                  \>$M$         \>$F$\\
+        $M$       \>$2,2$       \>$6,0$\\
+        $F$       \>$0,6$       \>$4,4$
+        	 \end{game}
+        \end{center}
+
+        \item<3-> Cada jugador tiene el siguiente set de acciones: $A_{L} = \{ M, F \}$ y $A_{E} = \{ M, F \}$. Por lo tanto, al considerar ambos jugadores: $A = A_{L} \times A_{E}$ con elemento (perfil de acciones) $a = (a_{L}, a_{E})$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+        \item<1-> Debe quedar claro que el \'unico equilibrio de Nash en este juego es $a = (M,M)$. Adicionalmente, es evidente que $a = (F,F)$ genera mayores pagos para ambos (y no es equilibrio de Nash).
+
+        \item<2-> ¿C\'omo explicamos que se observo que ambos bandos dispararon para fallar?
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> En las trincheras -a diferencia de otros escenarios de guerra- existi\'o interacci\'on frecuente.
+		\item<2-> Es decir, se ve\'ian las caras frecuentemente y solo tenian que decidir M o F todos los d\'ias.
+		\item<3-> La repetici\'on en la interacci\'on es fundamental para que se pueda dar la cooperaci\'on.
+		\begin{wideitemize}
+			\item<4->[--] Por cooperaci\'on podemos entender al perfil de acciones que genera mayores pagos para todos. 
+			\item<5->[--] Esa cooperaci\'on se basa en un esquema de premios y castigos (i.e. \textit{quedemos en atacar a fallar en Navidad, pero si alguien ataca a matar en Navidad, atacamos a matar TODOS los dias...})
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}
+	\begin{wideitemize}
+		\item<1-> Usemos el instrumental de las notas anteriores.
+		\item<2-> Sabemos que un juego en forma extensiva esta compuesto por: historias $H$, estrat\'egias $S$ y funciones de utilidad $u$.
+		\item<3-> Ahora hagamos un ligera modificaci\'on. Anteriormente, cada jugador se movia secuencialmente (i.e. ajedrez o damas chinas o monopolio). Vamos a permitir que cada uno se mueva simultaneamente varias veces (cachipun repetidamente o patear penales repetidamente).
+		\item<4-> Debido a esto, tenemos que modificar nuestro arbol ligeramente.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}
+	\begin{wideitemize}
+		\item<1-> VER FIGURA PIZARRA.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}{Historias}
+	\begin{wideitemize}
+		\item<1-> Definamos como $a^{t}$ como el perfil de acciones que ocurre en el periodo $t=0$. Si tenemos $t \in \{0,\dots, T\}$ con $T=1$ entonces $a^{0} \in A$ y $a^{1} \in A$ van a existir.
+		\item<2-> Una historia hasta el periodo $t$ ($h^{t}$, una historia de muchas) se define como una secuencia de perfiles de acciones
+		\begin{align*}
+			h^{t} = (a^{0}, \dots, a^{t-1})
+		\end{align*} y pertenece al set de todas las historias posibles hasta el periodo $t$ dado por $A^{t} = H^{t}$. Note que este set equivale a multiplicar $A$ t veces.
+		\item<3-> El set de TODAS las historias posibles es entonces $H = \cup_{t=0}^{T+1} H^{t}$ con $H^{0} = \emptyset$. Adicionalmente, el set de TODAS las historias NO TERMINALES es $H^{NT} = \cup_{t=0}^{T} H^{t}$. Finalmente, el set de las historias terminales es $H^{TER} = H^{T+1}$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Podemos listar todas las historias en este juego repetido finito?
+		\item<2-> Primero notamos que $H^{0} = \emptyset$, $H^{1} = A$ y $H^{2} = A^{2}$.
+		\item<3-> Entonces, $h^{1} = (M,F) \in H^{1}$ y $h^{2} = ((M,F),(M,F)) \in H^{2}$ como ejemplos. Adicionalmente, $H^{1}$ tendr\'a 4 elementos y $H^{2}$ 16 elementos. Por lo tanto, $H$ tiene 21 elementos.
+		\item<4-> Usando las historias no terminales, podemos notar que $H^{NT}_{T} = H^{NT}_{E}$. Esto se debe a que juegan de manera simult\'anea, por lo que en cada periodo la historia tiene que recoger los movimientos de todos los jugadores.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}{Estrategias}
+	\begin{wideitemize}
+		\item<1-> ¿C\'omo definir estrategias? Una estrategia para el jugador $i$ es una secuencia de funciones $s_{i} = (s_{i}^{0}, s_{i}^{1}, \dots, s_{i}^{t})$ tal que $s_{i}^{t}: H^{t} \rightarrow A_{i}$ y con $t\leq T$.
+		\item<2-> Recuerde que las estrat\'egias incluyen solo acciones relacionadas a historias no terminales.
+		\item<3-> Las estrategias que se pueden dar en el juego son $S = S_{1} \times \dots S_{N}$. con elemento $s$.
+		\item<4-> El outcome del juego es entonces $O(s)$, la cual es un elemento del set de historias terminales $H^{TER}$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> $H^{0} = \{ \emptyset \}$, $H^{1} = \{ (M,M), (M,F), (F,M), (F,F) \}$.
+		\item<2-> Esto significa que $H^{NT} = H^{0} \cup H^{1} = \{ \emptyset, (M,M), (M,F), (F,M), (F,F) \}$ y por lo tanto, tanto $E$ como $L$ deben de planificar estrategias con 5 elementos.
+		\item<3-> Si consideramos que cada jugador tiene en un periodo dos posibles acciones (M o F), entonces el n\'umero de elementos de $S_{L}$ sera $2^{5}$. Ocurre lo mismo para $S_{E}$
+		\item<4-> Entonces, un elemento de $s_{L} \in S_{L}$ puede ser igual a $s_{L} = MMMFF$. An\'alogamente, $s_{E} \in S_{E}$ puede ser $s_{E} = FMMMF$. \textbf{Note que esta no es una notaci\'on clara. Escribamoslo mejor.}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{align*}
+		s_{L}^{0}(\emptyset) &= M \\
+		s_{L}^{1}(h^{1}) & = \begin{cases}
+			M \text{ si } h^{1} = (M,M) \\
+			M \text{ si } h^{1} = (M,F) \\
+			F \text{ si } h^{1} = (F,M) \\
+			F \text{ si } h^{1} = (F,F)
+		\end{cases}
+	\end{align*}
+
+	\begin{align*}
+		s_{E}^{0}(\emptyset) &= F \\
+		s_{E}^{1}(h^{1}) & = \begin{cases}
+			M \text{ si } h^{1} = (M,M) \\
+			M \text{ si } h^{1} = (M,F) \\
+			M \text{ si } h^{1} = (F,M) \\
+			F \text{ si } h^{1} = (F,F)
+		\end{cases}
+	\end{align*}
+
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> $S = S_{L} \times S_{E}$ y contiene $(2^{5} \times 2^{5}) = 1024$ elementos. 
+		\item<2-> Siguiendo el ejemplo anterior, un elemento $s \in S$ ser\'ia $s = ( (M,F), (M,M), (M,M), (F,M), (F,F) )$ o,
+		\begin{align*}
+			s^{0}(\emptyset) & = (M,F) \\
+			s^{1}(h^{1}) & = \begin{cases}
+				(M,M) \text{ si } h^{1} = (M,M) \\
+				(M,M) \text{ si } h^{1} = (M,F) \\
+				(F,M) \text{ si } h^{1} = (F,M) \\
+				(F,F) \text{ si } h^{1} = (F,F) 
+			\end{cases}
+		\end{align*}
+	\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Si se jugase esta estrategia, ¿cu\'al seria la historia terminal? $O(s) = ( (M,F), (M,M) )$. Lo que significa que $a^{0} = (M,F)$ es el perfil de acciones en el periodo $t=0$ y $a^{1} = (M,M)$, el del periodo $t=1$.
+	\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Juegos Repetidos Finitos}{Utilidad}
+	\begin{wideitemize}
+		\item<1-> Cada jugador obtiene $U_{i}( O(s) ) = \sum_{t=0}^{T} \delta^{t} u_{i}^{t}( a_{t} )  $ con $\delta \in [0,1]$
+		\item<2-> El valor de $U_{i}$ puede entenderse como el valor presente (en $t=0$) de flujos futuros.
+		\item<3-> Los flujos futuros en periodo $t$ se descuentan de acuerdo a $\delta^{t}$.
+		\item<4-> Si $\delta$ tiende a $0$, entonces se penalizan m\'as los flujos futuros. Es decir, en el juego no importa el futuro. Si esto ocurre, se dice que los jugadores son m\'as impacientes.
+		\item<5-> De modo contrario, si $\delta$ tiende a $1$ entonces los jugadores son m\'as pacientes.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> ¿Cu\'al seria el pago asociado para cada jugador? $u_{L}^{0}((M,F))= 6$ y $u_{L}^{1}((M,M))= 2 $. Adicionalmente, $u_{E}^{0}((M,F))= 0$ y $u_{E}^{1}((M,M))= 2 $. 
+		\item<2-> Por lo tanto, $U_{L} = 6 + \delta 2$. Si $\delta = 1$, entonces 8 y si $\delta=0$, entonces 6.
+		\item<3-> An\'alogamente, $U_{E} = 0 + \delta 2$. Si $\delta = 1$, entonces 2 y si $\delta=0$, entonces 0.
+		%\item<3-> Para simplificar, por el momento asumamos $\delta = 1$. Es posible que $s = ( (F,F), (F,F) )$ sea equilibrio perfecto en subjuegos?
+		%\item<4-> NO. Ver pizarra. Esto ocurren para todo valor finito de $T$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}{Equilibrio de Nash}
+	\begin{wideitemize}
+		\item<1-> Obviamente, no podemos escribir el juego en forma estrat\'egica (matriz) en la pizarra -seria una matriz de 32 x 32-.
+		% Tadelis 2013, page 180, proposition 9.1
+		\item<2-> \textbf{Idea 1:} Sea $a^{*,t}$ un perfil de acciones que es equilibrio de Nash (que no tiene porque ser \'unico) del juego de un periodo $t$. Si $s^{*t}(h^{t}) = a^{*,t}$ para cualquier $h^{t} \in H^{t}$ y $t\leq T$, entonces la estrategia $s^{*} = (s^{*0}, \dots s^{*T})$ es un equilibrio perfecto en subjuegos.
+		\begin{wideitemize}
+			\item<3->[--] En $t=T$ se juega un equilibrio de Nash $s^{*T}$. Yendo en reversa, esto supone que para otros subjuegos en $t<T$, solo se suma una constante, por lo que $s^{*t}$ es equilibrio de Nash.
+			\item<4->[--] Aqu\'i no hay enlaces intertemporales en t\'erminos de estrategias, se juega est\'aticamente. Es decir, para un periodo $t$ se juega la estrategia $s^{*t}$ independientemente de c\'omo se llego a ese periodo (es decir, del valor de $h^{t}$), y en el futuro siempre se da una constante (que es Equilibrio de Nash).
+			%\item<5->[--] Aplicando para resto de periodos se logra el resultado.
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Dado que el juego tiene en cada periodo un \'unico equilibrio de Nash $(M,M)$, entonces $s^{0}(\emptyset) = (M,M)$ y $s^{1}(h^{1}) = (M,M)$ para todo $h^{1} \in H^{1}$ es un equilibrio perfecto en subjuegos. 
+		\item<2-> En $t=1$ nadie tiene incentivos a desviarse. En el \'ultimo periodo se juega $(M,M)$ por lo que ambos jugadores reciben un pago igual a 2. No seria racional jugar distinto (¿por qu\'e?). ¿Y en $t=0$ (asumiendo $\delta=1$)?
+		\begin{center}
+			 \begin{game}{2}{2}[\textbf{L}][\textbf{E}]
+                  \>$M$         \>$F$\\
+        $M$       \>$2+2,2+2$       \>$6+2,0+2$\\
+        $F$       \>$0+2,6+2$       \>$4+2,4+2$
+        	 \end{game}
+        \end{center}
+        \item<3-> Y jugar aqui $(M,M)$ sigue siendo equilibrio de Nash. Por lo tanto $s^{*}$ es un equilibrio perfecto en subjuegos.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo II}{Halc\'on o Paloma Repetido}
+\begin{center}
+	 \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$P$         \>$H$\\
+        $P$       \>$3,3$       \>$1,4$\\
+        $H$       \>$4,1$       \>$0,0$
+ \end{game}
+ \end{center}
+
+	\begin{wideitemize}
+		\item<1-> Asuma $T=1$ y $\delta=1$.
+		\item<2-> Siguiendo el ejemplo anterior debe entender que $s^{0}(\emptyset) = (P,H)$, $s^{1}(h^{1}) = (H,P)$ para todo $h^{1} \in H^{1}$ es un equilibrio perfecto en subjuegos.
+		\item<3-> ¿Puede encontrar otros equilibrios perfectos en subjuegos?
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}{Equilibrio Perfecto en Subjuegos}
+	\begin{wideitemize}
+		\item<1-> La \textbf{Idea 1} dice que si uno juega est\'aticamente, es decir juega un equilibrio de Nash en cada subjuego, entonces se puede encontrar trivialmente un equilibrio perfecto en subjuegos.
+
+		\item<2-> Pero acaso es posible encontrar un Equilibrio Perfecto en Subjuegos donde uno juega algo distinto a un Equilibrio de Nash? 
+		\begin{wideitemize}
+			\item<3->[*] L\'ogica: Cooperamos inicialmente (o hacemos algo que no es Equilibrio de Nash) y si esto ocurre, premio; si no, castigo.
+		\end{wideitemize}
+
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Finitos}{Equilibrio Perfecto en Subjuegos}
+	\begin{wideitemize}
+
+		\item<1-> \textbf{Pero en juegos repetidos finitos solo se puede cooperar si existen m\'ultiples equilibrios de Nash en un periodo. Por que? }
+		\begin{wideitemize}
+			\item<2->[*] \textbf{Idea 2:} \'Ultimo periodo siempre se juega un equilibrio de Nash.
+			\item<3->[*] \textbf{Idea 3:} Si solo hay un equilibrio de Nash en un periodo, yendo para atr\'as, solo repito jugar equilibrio de Nash. Por contraparte, no puedo prometer algo a futuro (creiblemente) que no sea el \'unico equilibrio de Nash. \textit{Si tengo m\'ultiples equilibrios, puedo prometer uno bueno o uno malo.}
+		\end{wideitemize}
+
+	\end{wideitemize}
+\end{frame}
+
+
+
+\begin{frame}{Juegos Repetidos Finitos}{Equilibrio Perfecto en Subjuegos}
+	\begin{wideitemize}
+		\item<1-> \textbf{Idea 2:} Dado $s^{*}$ como equilibrio de Nash de juego repetido finito. En el \'ultimo periodo siempre se juega un equilibrio de Nash. Es decir, $a^{*}$ es un equilibrio de Nash tal que $s^{*T}(h^{T}) = a^{*}$.
+			\begin{wideitemize}
+				\item<2->[--] No tengo incentivos a elegir algo distinto a mi mejor respuesta porque no hay castigos futuros.
+				\item<3->[--] Intuitivo: trabajo grupal en la FEN finitamente repetido, prestar dinero y me voy de viaje, \'ultimo dia de trabajo, apocal\'ipsis y fin del mundo con fecha dada, etc.
+			\end{wideitemize}
+		\item<4-> \textbf{Idea 3:} Si en el periodo el juego en forma estrat\'egica (de un juego repetido finito) tiene un \textbf{\'unico} equilibrio de Nash, entonces el juego repetido finito tiene un \textbf{\'unico} equilibrio perfecto en subjuegos.
+			\begin{wideitemize}
+				\item<5->[--] Usando Idea 2 resolver para periodos anteriores.
+				\item<6->[--] En un juego repetido finito no es posible establecer castigos, por lo que no tiene sentido realizar la cooperaci\'on. Esto se dar\'a para cualquier valor de $\delta$.
+			\end{wideitemize}
+		%\item<2-> En el contexto de la PGM, esto significa que el \'unico equilibrio perfecto en subjuegos es $s = (s^{0}, \dots, s^{T-1})$ donde cada elemento es $s^{t} = (M,M)$. Por que?
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Para simplificar, por el momento asumamos $\delta \in [0,1]$. 
+		\item<2-> Plantemos la siguiente estrategia para cada jugador: $s_{i}^{0}(\emptyset) = M$ y $s_{i}^{1}(h^{1}) = F$ para cualquier $h^{1}$. Si ambos jugadores la juegan, ¿esto podr\'ia ser un equilibrio perfecto en subjuegos?
+		\item<3-> Para identificar si esto es cierto se debe identificar si alg\'un jugador $i$ desea desviarse de la estrategia propuesta.
+			\begin{wideitemize}
+				\item<4->[--] No hay incentivos al desvio en $t=1$. Entonces, solo se debe revisar incentivos para $t=0$.
+			\end{wideitemize}
+		\item<5-> Ahora asuma $s_{i}^{0}(\emptyset) = F$ y $s_{i}^{1}(h^{1}) = M$, si se juega ¿es equilibrio perfecto en subjuegos? 
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo II}{Halc\'on o Paloma Repetido}
+	\begin{wideitemize}
+		\item<1-> Para simplificar, por el momento asumamos $\delta \in [0,1]$. 
+		\item<2-> Puede $s_{i}^{0}(\emptyset) = P$, $s_{1}^{1}(h^{1}) = H$ y $s_{1}^{2}(h^{1}) = P$ para cualquier $h^{1}$.			\begin{wideitemize}
+				\item<3->[--] Notemos que en el \'ultimo periodo siempre se da un equilibrio de Nash, por lo que no jugador quiere desviarse.
+				\item<4->[--] Es esto cierto en $t=0$? Para jugador 1 evaluamos
+				\begin{align*}
+					3+\delta 4 & \geq 4 + \delta 4 
+				\end{align*} y para 2 
+				\begin{align*}
+					3+\delta 1 & \geq 4 + \delta 1
+				\end{align*}
+				\item<5->[--] Basta con que alg\'un jugador se quiera desviar. En este caso ambos lo quieren hacer.
+			\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo III}{Dilema del Prisionero Modificado}
+\begin{center}
+	 \begin{game}{3}{3}[\textbf{1}][\textbf{2}]
+                  \>$C$         \>$D$    \>$E$    \\
+        $C$       \>$3,3$       \>$0,4$  \>$0,0$  \\
+        $D$       \>$4,0$       \>$1,1$  \>$0,0$  \\
+        $E$       \>$0,0$       \>$0,0$  \>$0.5,0.5$  
+ \end{game}
+ \end{center}
+	\begin{wideitemize}
+		\item<1-> Asuma $T=1$. Hay 2 equilibrios de Nash: $(D,D)$ y $(E,E)$. ¿Es posible que $s_{i}^{0}(\emptyset) = C$ y $s_{i}^{1}( (C,C) ) = C$ y $s_{i}^{1}(h^{1}) = D$ para cualquier otro $h^{1} \in H^{1}$ sea un equilibrio perfecto en subjuegos?
+		\item<2-> Notemos que en el \'ultimo periodo SOLO se juega un equilibrio de Nash en los subjuegos $h^{1} \neq (C,C)$. Si se da $h^{1} = (C,C)$ entonces se juega un perfil de acciones que NO es equilibrio de Nash. Esto significa que hay un subjuego en $t=1$ tal que existen incentivos a desvio.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo III}{Dilema del Prisionero Modificado}
+	\begin{wideitemize}
+		\item<1-> Solo sabiendo el punto anterior, por nuestra Idea 2 entonces la estrategia propuesta NO es equilibrio perfecto en subjuegos.
+		\item<2-> Adicionalmente, qu\'e ocurria en el periodo $t=0$?
+		\begin{align*}
+			3 + \delta 3 & \geq 4 + \delta  
+		\end{align*}
+		\item<3-> Esto solo es cierto siempre que los jugadores sean suficientemente pacientes ($\delta$ alto, mayor a 0.5).
+		\item<4-> BASTA con saber que un jugador desea desviarse en un subjuego (o en un periodo) para decir que la estrategia no es equilibrio perfecto en subjuegos.
+	\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Juegos Repetidos Finitos}{Equilibrio Perfecto en Subjuegos}
+	\begin{wideitemize}
+		\item<1-> En resumen, un equilibrio perfecto en subjuegos es un una estrategia $s^{*}$ tal que para ningun subjuego (es decir, historia no terminal) ning\'un jugador tiene incentivos a desviarse.
+		\item<2-> Van a existir MUCHOS posibles equilibrios perfectos en subjuegos. Pero lo que sabemos con precisi\'on es que si en un periodo \textbf{SOLO} existe un equilibrio de Nash, entonces no va a ser posible que en un periodo se juegue algo distinto. Es decir, solo hay \textbf{UN} equilibrio perfecto en subjuegos.
+		\item<3-> \textbf{Eso significa que en el dilema del prisionero (donde solo hay un eq. de Nash) no es posible la cooperaci\'on.}
+	\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Juegos Repetidos Infinitos}{Introducci\'on}
+	\begin{wideitemize}
+		\item<1-> Dado esto, ¿c\'omo podemos justificar la cooperaci\'on (en un juego como el dilema del prisionero)?
+		\item<2-> Ejemplos
+		\begin{wideitemize}
+			\item<3->[--] Cambio clim\'atico.
+			\item<4->[--] Conflictos b\'elicos.
+			\item<5->[--] Relaciones comerciales informales.
+		\end{wideitemize}
+		\item<6-> Vamos a permitir que el juego se repita infinitamente (i.e., \textit{no sabemos cuando puede terminar}).
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Infinitos}{Introducci\'on}
+	\begin{wideitemize}
+		\item<1-> Dado esto, modifiquemos el marco anterior (resumidamente).
+		\item<2-> En un periodo $t$
+			\begin{wideitemize}
+				\item<3->[--] Cada jugador tiene un set de acciones $A_{i}$ y es posible definir el set de perfil de acciones $A$.
+				\item<4->[--] Entonces, $a^{t}$ es un posible perfil de acciones en el periodo $t$.
+				\item<5->[--] Adicionalmente, podemos encontrar el o los equilibrios de Nash.
+			\end{wideitemize}
+		\item<6-> Entonces, $h^{t} = (a^{0}, \dots, a^{t-1})$ indica una posible historia jugada hasta el inicio del periodo $t$.
+		\item<7-> Recordemos, hay periodos infinitos. No hay $T$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Infinitos}{Introducci\'on}
+	\begin{wideitemize}
+		\item<1-> Una estrategia (de jugador $i$) es entonces una secuencia de funciones infinitas: $s_{i} = (s_{i}^{0}, \dots, s_{i}^{t}, \dots )$ donde cada $s_{i}^{t}$ es una funci\'on $s_{i}^{t}: H^{t} \rightarrow A_{i}$.
+		\item<2-> Asumiendo que hay 2 jugadores, podemos definir entonces: $s = (s^{0}, \dots, s^{t}, \dots)$ donde $s^{t}$ es una funci\'on $s^{t}: H^{2t} \rightarrow A$.
+		\item<3-> Notemos que es imposible definir explicitamente todas las estrategias, por lo tanto vamos a tener que escribirlas resumidamente.
+		\item<4-> Es decir, hay un n\'umero infinito de historias y de estrategias.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Una posible estrategia: 
+		\begin{align*}
+			s_{i}^{0}(\emptyset) &= F \\
+			s_{i}^{t}(h^{t}) &= \begin{cases}
+				F \text{ si } a^{t-1} = (F,F) \\
+				M \text{ en cualquier otro caso}
+			\end{cases}
+		\end{align*}
+		\item<2-> Informalmente se entiende como: \textit{empecemos cooperando y sigamoslo haciendo a menos que alguno haga algo distinto.}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo II}{Halc\'on o Paloma Repetido}
+	\begin{wideitemize}
+		\item<1-> Una posible estrategia: 
+		\begin{align*}
+			s_{i}^{0}(\emptyset) &= P \\
+			s_{i}^{t}(h^{t}) &= \begin{cases}
+				P \text{ si } a^{t-1} = (P,P) \\
+				H \text{ en cualquier otro caso}
+				\end{cases}
+		\end{align*}
+		\item<2-> Similar al ejemplo anterior.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Juegos Repetidos Infinitos}{Equilibrio Perfecto en Subjuegos}
+	\begin{wideitemize}
+		\item<1-> ¿C\'omo encontrar un equilibrio perfecto en subjuegos en este contexto?
+		\item<2-> Te\'oricamente, no deben existir incentivos para ning\'un jugador a desv\'io en ning\'un subjuego.
+		\item<3-> \textbf{Existen infinitos subjuegos, ¿qu\'e hacemos!!!?}
+		\item<4-> Necesitamos 2 condiciones: i. no desviarme de estrategia propuesta y ii. no desviarme del castigo de la estrategia propuesta.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Siguiendo el ejemplo: 
+			\begin{wideitemize}
+				\item<2->[--] Condici\'on i. 
+				\begin{align*}
+					4/(1-\delta) \geq 6 + \delta (2/(1-\delta))
+				\end{align*} que se cumple para todo $\delta \geq 1/2$
+				\item<3->[--] Condici\'on ii.
+				\begin{align*}
+					2/(1-\delta) \geq 0 + \delta (2/(1-\delta))
+				\end{align*} que siempre se cumple. Esto porque no hay incentivo a desviarse de jugar repetidamente un equilibrio de Nash $(M,M)$.
+				\item<4-> Entonces si los jugadores son suficientemente pacientes ($\delta \geq 1/2$) esta estrategia es un equilibrio perfecto en subjuegos.
+			\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Evaluemos la misma estrategia pero modifiquemos el valor de seguir la estrategia $(M,M)$ a pagos iguales a 1. C\'omo cambiaria el problema?
+
+			\begin{wideitemize}
+			\item<2->[--] Condici\'on i. 
+				\begin{align*}
+					4/(1-\delta) \geq 6 + \delta (1/(1-\delta))
+				\end{align*} que se cumple para todo $\delta \geq 2/5$
+			\item<3->[--] Condici\'on ii.
+				\begin{align*}
+					1/(1-\delta) \geq 0 + \delta (1/(1-\delta))
+				\end{align*} que siempre se cumple. Esto porque no hay incentivo a desviarse de jugar repetidamente un equilibrio de Nash $(M,M)$.
+			\item<4-> Entonces si los jugadores son suficientemente pacientes ($\delta \geq 2/5$) esta estrategia es un equilibrio perfecto en subjuegos.
+			\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Lo que diferencia este caso del anterior es que si uno se desv\'ia obtiene menos pagos. Esto se traduce en que solo es necesario $\delta \geq 2/5$ en lugar de $\delta \geq 1/2$. Si $(D,D)$ paga 0.5, entonces $\delta \geq 4/11$.
+		\item<2-> Todo lo anterior se resumen en algo simple. Que tanto uno puede cooperar se basa en la comparaci\'on de los valores presentes de cooperar o desviarse.
+		\item<3-> Si mantenemos constante el valor de cooperar, pero bajamos el desv\'io, entonces cooperar es m\'as facil (y viceversa).
+		\item<4-> Una interpretaci\'on alternativa es decir que la cooperaci\'on se puede dar m\'as facil mientras que los castigos sean m\'as fuerte.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo II}{Halc\'on o Paloma Repetido}
+	\begin{wideitemize}
+		\item<1-> Siguiendo el ejemplo: 
+			\begin{wideitemize}
+				\item<2->[--] Condici\'on i. 
+				\begin{align*}
+					3/(1-\delta) \geq 4 + \delta (0/(1-\delta))
+				\end{align*} que se cumple para todo $\delta \geq 1/4$
+				\item<3->[--] Condici\'on ii.
+				\begin{align*}
+					0/(1-\delta) \geq 1 + \delta (0/(1-\delta))
+				\end{align*} que nunca se cumple.
+				\item<4-> Entonces esta estrategia es nunca un equilibrio perfecto en subjuegos.
+			\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo IV}{Porcentajes en Comisiones}
+	\begin{center}
+	\begin{game}{3}{3}[\textbf{1}][\textbf{2}]
+                  \>$B$         \>$M$    \>$A$    \\
+        $B$       \>$0,0$       \>$2,1$  \>$4,-1$  \\
+        $M$       \>$1,2$       \>$4,4$  \>$7,1$  \\
+        $A$       \>$-1,4$       \>$1,7$  \>$5,5$  
+ 	\end{game}
+ 	\end{center}
+
+\begin{wideitemize}
+	\item<1-> Hay un solo equilibrio de Nash $(M,M)$ en el juego de un periodo.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo IV}{Porcentajes en Comisiones}
+\begin{wideitemize}
+	\item<1-> Posible Estrategia.
+	\begin{align*}
+		s_{i}^{0}(\emptyset) &= A \\
+		s_{i}^{t}(h^{t}) & = \begin{cases}
+		 A \text{ si } a^{t-1} = (A,A) \\
+		 M \text{ para cualquier otro caso }
+		\end{cases}
+	\end{align*}
+	\item<2-> Condici\'on i.
+		\begin{align*}
+			5/(1-\delta) \geq 7 + \delta(4/(1-\delta))
+		\end{align*} que se cumple si $\delta \geq 2/3$. Adicionalmente, note que tambi\'en podr\'ia desviarse a $4 + 4/(1-\delta)$ (pero no le conviene, por qu\'e?). 
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo IV}{Porcentajes en Comisiones}
+\begin{wideitemize}
+	\item<1-> Condici\'on ii.
+		\begin{align*}
+			4/(1-\delta) \geq 2 + \delta(4/(1-\delta))
+		\end{align*} que se cumple si $1\geq\delta$, es decir siempre. Note que tambi\'en pudo desviarse a $1 + \delta(4/(1-\delta))$. Finalmente, esta condici\'on es trivial porque al ser $(M,M)$ un equilibrio de Nash, si se repite no hay incentivos a desvio. 
+	\item<2-> Por lo tanto, esta estrategia es equilibrio perfecto en subjuegos si $\delta \geq 2/3$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo IV}{Porcentajes en Comisiones}
+\begin{wideitemize}
+	\item<1-> Sigamos la misma estrategia pero ahora asumamos que $(A,A)$ paga 6.
+	\item<2-> Condici\'on i.
+		\begin{align*}
+			6/(1-\delta) \geq 7 + \delta(4/(1-\delta))
+		\end{align*} que se cumple si $\delta \geq 1/3$.
+	\item<3-> Condici\'on ii es la misma.
+	\item<4-> Por lo tanto, en este caso la estrategia es un equilibrio perfecto en subjuegos si $\delta \geq 1/3$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo IV}{Porcentajes en Comisiones}
+\begin{wideitemize}
+	\item<1-> De manera alternativa, notamos que la cooperaci\'on se hace m\'as facil cuando el valor de la cooperaci\'on se incrementa (y el del desv\'io se mantiene constante).
+	\item<2-> Eso se evidencia en tanto se pasa de $\delta \geq 2/3$ a $\delta \geq 1/3$.
+	\item<3-> Entonces, la cooperaci\'on se facilita si el valor de cooperar se incrementa o si el valor del desv\'io disminuye.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{BONUS TRACK}
+\begin{wideitemize}
+	\item<1-> Existen 3 conceptos que vamos a discutir adicionalmente:
+	\begin{wideitemize}
+		\item<2->[--] Teorema de Folk (o \textit{Folk Theorem})
+		\item<3->[--] Distintos tipos de estrategias
+		\item<4->[--] Colusion Parcial
+	\end{wideitemize}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{BONUS TRACK}{Teorema de Folk}
+\begin{wideitemize}
+	\item<1-> ¿Qu\'e es? Cualquier posible perfil de acciones de un juego est\'atico puede ser equilibrio perfecto en subjuegos si existe un castigo espec\'ifico y los agentes son suficientemente pacientes.
+	\item<2-> ¿Por qu\'e se llama asi? Porque era un resultado \textit{folkcl\'orico o de tradici\'on oral o conocido} pero no demostrado. Es recien en 1980s que se publican diferentes pruebas de este.
+	\item<3-> Para nosotros, este teorema se resume en saber si existen condiciones sobre $\delta$ tal que una determinada estrategia -donde se nos pide jugar un perfil de acci\'on que se entiende como cooperativo- puede ser equilibrio perfecto en subjuegos del juego repetido infinito.
+	\item<4-> Notemos que para todas las estrategias evaluadas (en la secci\'on de juegos repetidos infinitos), podemos encontrar una condici\'on de $\delta$ que nos indica que si es suficientemente alto, son equilibrio perfecto en subjuegos.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{BONUS TRACK}{Distintos Tipos de Estrategias}
+\begin{wideitemize}
+	\item<1-> Existen infinitas formas de como uno puede establecer una estrategia.
+	\item<2-> Las que hemos visto en esta secci\'on siempre tienen la siguiente forma: \textit{cooperemos hasta que alguno se desvie, si alguno lo hace hacemos un castigo perpetuo.} Este tipo de estrategia se denomina Grim-Trigger.
+	\item<3-> La estrategia Grim-Trigger se puede modificar haciendo que el castigo no sea perpetuo, pero que dure por cierta cantidad de periodos. Si tenemos un castigo m\'as suave, nuestro incentivo a desviarnos se incrementara y por lo tanto ser\'a m\'as dificil cooperar.
+	\item<4-> Finalmente, otro tipo conocido de estrategias es Tit-for-Tat (toma y dame) donde las firmas se rotan alg\'un pago alto. 
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{BONUS TRACK}{Colusi\'on Parcial}
+\begin{wideitemize}
+	\item<1-> ¿Qu\'e pasa si no todas las firmas coluden?
+		\begin{wideitemize}
+			\item<2->[--] Las firmas que no coluden se ven favorecidas.
+			\item<3->[--] En Cournot, si un subgrupo colude producen menos con la idea de subir el precio. La mejor respuesta de las que no coluden es incrementar su producci\'on. Con ello son capaces de producir y recibir un precio mayor por lo que se ven beneficiadas.
+			\item<4->[--] En Bertrand, si un subgrupo colude entonces fija un precio mayor al costo marginal. La mejor respuesta de las que no coluden es fijar ligeramente un precio m\'as bajo a fin de obtener toda la demanda y obtener un margen positivo.
+		\end{wideitemize}
+\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\end{document}
+
+\iffalse
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Otra posible estrategia:
+			\begin{align*}
+			s_{i}^{0}(\emptyset) &= F \\
+			s_{i}^{t}(h^{t}) &= \begin{cases}
+				F \text{ si } a^{t-1} = (F,F) \\
+				M \text{ por 1 periodo y luego F, en cualquier otro caso}
+				\end{cases}
+			\end{align*}
+		\item<2-> Condici\'on i.
+		\begin{align*}
+			5 + \delta 5 / (1-\delta) \geq 7 + \delta 4 
+		\end{align*}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Ejemplo I}{Primera Guerra Mundial}
+	\begin{wideitemize}
+		\item<1-> Condici\'on ii. Note que puedo desviarme en 2 ocasiones del castigo.
+
+		\begin{wideitemize}
+			\item<2-> AAA
+			\begin{align*}
+				2 + \delta 2 \delta^{2}(4)/(1-\delta) \geq 0 + \delta 2 + \delta^{2}2 + \delta^{3}(4)/(1-\delta)
+			\end{align*}
+
+		\end{wideitemize}
+
+	\end{wideitemize}
+\end{frame}
+\fi

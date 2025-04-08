@@ -1,0 +1,97 @@
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{sgamevar, tikz} % Game theory packages
+\usepackage{pgfplots}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Microeconom\'ia Aplicada (MAE)}
+\author{Ayudantia 2: Juegos Din\'amicos con informaci\'on completa \\ Profesor: Jose Manuel Paz y Mi\~no \\ Ayudante: Vicente Merrill}
+\date{}
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada, Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+% \usepackage{array, xcolor}
+% \usepackage{color,hyperref}
+% \definecolor{clemsonorange}{HTML}{EA6A20}
+% \hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+%===================Startup========================
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+
+1.- (Negociaciones de salario) Este es un juego de negociaciones entre un sindicato laboral y una firma. En una primera etapa, el sindicator decide que salario debe recibir $w$, el cual afecta a todos los trabajadores. En la segunda etapa, la firma decide cuantos trabajadores contratar $h \in [0,1]$. La funcion de utilidad del sindicato es
+\begin{align*}
+	u_{L}(w,h) = wh
+\end{align*} por lo que se incrementa con ambos argumentos. De otro modo, la de la firma es
+\begin{align*}
+	\pi(w,h) = \left( h - \frac{h^{2}}{2} \right) - wh
+\end{align*}
+
+\begin{enumerate}
+	\item Obtenga el/los equilibrio de Nash perfecto en subjuegos.
+	\item ¿Cu\'al es la historia terminal asociada al equilibrio obtenido en la pregunta anterior?
+	\item ¿Cu\'ales son los pagos asociados al equilibrio obtenido en la primera pregunta?
+\end{enumerate}
+
+2.- (Stackelberg con 3 firmas) Una industria tiene 3 firmas ($i=1,2,3$). Cada firma $i$ tiene la misma estructura de costos, la cual esta dada por $C(q_{i}) = 5 + 2q_{i}$, donde $q_{i}$ es la cantidad producida por firma $i$. Adicionalmente, la funcion inversa de demanda esta dada por $P(Q) = 18 - Q$. Asuma que primero la firma 1 produce, luego la 2 y finalmente la 3.
+
+\begin{enumerate}
+	\item Obtenga el/los equilibrio de Nash perfecto en subjuegos.
+	\item Compare el excedente del consumidor de la pregunta anterior con el resultante de un juego de Cournot con 3 firmas (con la misma estructura de costos).
+\end{enumerate}
+
+3.- (Bloqueo de entrada) Existen 2 firmas. La incumbente (firma 1) tiene que decidir si invierte o no en una tecnologia. La inversion es observada por el potencial entrante (firma 2) que decide si entra o no. Si la firma 2 no entra, el juego termina y la firma 1 se comporta como un monopolista. Si la firma 2 entra, las firmas juegan simultaneamente decidiendo precios bajos (L), medios (M) o altos (H) segun la figura anterior.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.8\textwidth]{../../../src/original_data/ayudantia2.jpg}
+%\caption{A simple caption \label{overflow}}
+\end{figure}
+
+
+\begin{enumerate}
+	\item Obtenga el/los equilibrio de Nash perfecto en subjuegos.
+\end{enumerate}
+
+\end{document}  

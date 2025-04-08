@@ -1,0 +1,24 @@
+#! python
+
+
+def build(ctx):
+	
+	"""
+    # Class 1: OLS	
+	ctx(
+	features ='run_r_script',
+	source   ='notes_ols.r',
+	target   =[
+	ctx.path_to(ctx, 'OUT_TABLES', 'table1_sim.tex'),
+	ctx.path_to(ctx, 'OUT_TABLES', 'table2_sim.tex'),	
+	ctx.path_to(ctx, 'OUT_FIGURES', 'f1_beta0.pdf'),
+	ctx.path_to(ctx, 'OUT_FIGURES', 'f1_beta1.pdf')
+	],
+	deps     =[
+	ctx.path_to(ctx, 'IN_DATA', 'cps09mar.xlsx')
+	],
+	name='class_1')
+	"""
+	
+
+

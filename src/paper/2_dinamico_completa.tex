@@ -1,0 +1,610 @@
+
+
+\documentclass[notes, 11pt]{beamer} % THIS
+% \documentclass[notes, 11pt]{beamer}
+% \documentclass[notes, 11pt, aspectratio=169]{beamer}
+
+% \usepackage{helvet}
+% \usepackage[default]{lato}
+% \usepackage{array}
+
+
+% \documentclass[handout]{beamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm]
+
+\usepackage{bbm}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{booktabs}
+\usepackage[percent]{overpic}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+\usepackage{subfig} % Manipulation and reference of small or sub figures and tables
+
+\setbeamertemplate{theorems}[numbered] % to number
+% \usetheme{Malmoe}
+\usetheme{default}
+% \usecolortheme{whale}
+\usecolortheme{rose}
+
+
+\newtheorem{defi}{Definition}
+\newtheorem{teo}{Theorem}
+\newtheorem{remi}{Remark}
+\newtheorem{exi}{Example}
+\newtheorem{propi}{Proposition}
+\newtheorem{proteo}{Proof}
+\newtheorem{lemi}{Lemma}
+\newtheorem{prolemi}{Proof}
+\newtheorem{propropi}{Proof}
+\newtheorem{coro}{Corollary}
+\newtheorem{proci}{Algorithm}
+\newtheorem{ass}{Assumption}
+
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}%
+
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+% \usepackage{enumitem}
+
+\usepackage[spanish]{babel}
+
+\usetikzlibrary{trees}
+
+% \renewcommand{\baselinestretch}{1}
+% \expandafter\def\expandafter\insertshorttitle\expandafter{%
+%   \insertshorttitle\hfill%
+%   \insertframenumber\,/\,\inserttotalframenumber}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+\title{Microeconom\'ia Aplicada (MAE)}   
+\subtitle{Teor\'ia de Juegos: Juegos Dinamicos con Informaci\'on Completa}   
+\author[Paz y Mino ]{Jos\'e Manuel Paz y Mi\~no}
+\institute[shortinst]{FEN UCHILE}
+\date{Oto\~no 2025} 
+
+\frame{\titlepage} 
+
+\begin{frame}{Elementos}
+		\begin{wideitemize}
+			\item<1-> N\'umero finito de jugadores $N$.
+			\item<2-> N\'umero finito de historias $h \in H$ (donde $Z \subset H$ es el set de historias terminales). 
+			\begin{wideitemize}
+				\item<3->[--] Una historia $h$ es una secuencia finita de acciones por parte de los jugadores tal que es $(a^{k})_{k=1,\dots,K}$ 
+				\item<4->[--] Por convenci\'on, siempre se incluye la historia vac\'ia $\emptyset$ en $H$
+			\end{wideitemize}
+			\item<5-> Funci\'on $P_{i} : H\setminus Z \rightarrow N$ que describe qu\'e jugador le corresponde moverse en una determinada historia $h$.
+			\item<6-> Funciones de utilidad $u_{i}: Z \rightarrow \mathbb{R}$. Asigna pagos a cada historia terminal (para cada jugador).
+		\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Elementos}
+ 		\begin{wideitemize}
+ 			\item<1-> Tenemos que definir que es lo que sabe cada jugador. Para eso tenemos que definir un set de informaci\'on del jugador $i$ como $h_{i}$ y el set de sets de informaci\'on del jugador $i$ como $H_{i}$.
+
+ 			\item<2-> Definamos como $A_{i}(h)$ las acciones disponibles para el jugador $i$ para $h \in H \setminus Z$.
+
+ 			\item<3-> Entonces, un set de informaci\'on $h_{i}$ tiene como propiedad que dadas historias no terminales $h',h'' \in H \setminus Z$, $A_{i}(h') = A_{i}(h'')$.
+
+ 			\item<4-> Por lo tanto, $H_{i}$ es un agrupamiento de subsets no vacios $h_{i}$.
+
+ 			\item<5-> Si los jugadores juegan secuencialmente, entonces todos los jugadores tienen sets de informaci\'on $h_{i}$ con un solo elemento $h$.
+ 		\end{wideitemize}
+\end{frame}
+
+\iffalse
+\begin{frame}
+	\begin{wideitemize}
+		\item<1-> Set de informaci\'on: Para cada $x$, $h(x)$ es el set de nodos que son posibles dado lo que el jugador $i(x)$ conoce. Entonces si $x' \in h(x)$, entonces $i(x')=i(x)$, $A(x')=A(x)$ y $h(x')=h(x)$. 
+ 		\item<2-> $H_{i}$ es el set de sets de informaci\'on para los cuales el jugador $i$ decide una acci\'on.
+ 			\begin{align*}
+ 				H_{i} = \{ S \subset X : S=h(x) \text{ para alg\'un } x \in X \text{ con } i(x)=i \}
+ 			\end{align*} tal que $A_{i}$ es el set de acciones disponibles para $i$ en cualquiera de sus sets de informaci\'on.
+ 		\item<3-> Una estrategia para un jugador $i$ en el juego extensivo es una funci\'on $s_{i} : H_{i} \rightarrow A_{i}$ tal que $s_{i}(h) \in A(h)$ para cada $h \in H_{i}$.
+	\end{wideitemize}
+\end{frame}
+\fi
+
+% \begin{frame}{Forma Extensiva}{Qu\'e es un \textit{game tree}?}
+% 	\begin{center}
+% 	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+% 	%Specify spacing for each level of the tree 
+% 	\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+% 	\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% 	\tikzstyle arrowstyle=[scale=1]
+% 	\tikzstyle directed=[postaction={decorate,decoration={markings,mark=at position .5 with {\arrow[arrowstyle]{stealth}}}}]
+% 	\tikzset{
+% 		% Two node styles for game trees; solid and hollow
+% 		solid node/.style={circle,draw, inner sep=1.5,fill=black},
+% 		hollow node/.style={circle,draw, inner sep=1.5}
+% 	}
+% 	% The Tree
+% 	\node(0)[solid node, label=above:{$$}]{}
+% 	child{node(1)[hollow node, label=below:{$$}]{} edge from parent node[left,xshift=-3]{$$}
+% 	}
+% 	child{node(2)[solid node, label=right:{$$}]{}
+% 	child{node[hollow node, label=below:{$$}]{} edge from parent node[left]{$$}}
+% 	child{node[hollow node, label=below:{$$}]{} edge from parent node[right]{$$}}
+% 	edge from parent node[right,xshift=3]{$$}
+% 	};
+% 	\end{tikzpicture}
+% 	\end{center}
+% \end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 1}
+\begin{center}
+\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+%Specify spacing for each level of the tree 
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,mark=at position .5 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzset{
+	% Two node styles for game trees; solid and hollow
+	solid node/.style={circle,draw, inner sep=1.5,fill=black},
+	hollow node/.style={circle,draw, inner sep=1.5}
+}
+% The Tree
+\node(0)[solid node, label=above:{$Entrante$}]{}
+child{node(1)[hollow node, label=below:{$(0,2)$}]{} edge from parent node[left,xshift=-3]{$NE$}
+}
+child{node(2)[solid node, label=right:{$Incumbente$}]{}
+child{node[hollow node, label=below:{$(-3,-1)$}]{} edge from parent node[left]{$P$}}
+child{node[hollow node, label=below:{$(1,1)$}]{} edge from parent node[right]{$A$}}
+edge from parent node[right,xshift=3]{$E$}
+};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 1}
+	\begin{wideitemize}
+		\item<1-> $N=\{ \text{Entrante}, \text{Incumbente} \}$.
+		\item<2-> $H = \{ \emptyset, (NE), (E), (E,P), (E,A) \}$.
+		\item<3-> $P(\emptyset) = \text{Entrante}$ y $P(h)= \text{Incumbente}$ para $h \notin Z$ y $h \neq \emptyset$.
+		\item<4-> $H_{E} = \{ \emptyset \}$ y $H_{I} = \{ \{(E)\} \}$.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 1}
+	\begin{wideitemize}
+		\item Funciones de Utilidad
+		\begin{align*}
+			U_{1}(z) = \begin{cases}
+				0 & \text{ si } z = (NE) \\
+			   -3 & \text{ si } z = (E,P) \\
+			   1  & \text{ si } z = (E,A)
+			\end{cases}\\
+			U_{2}(z) = \begin{cases}
+				2 & \text{ si } z = (NE) \\
+			   -1 & \text{ si } z = (E,P) \\
+			   1  & \text{ si } z = (E,A)
+			\end{cases}
+		\end{align*}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 1}
+	\begin{center}
+	 \begin{game}{2}{2}[\textbf{Ent}][\textbf{Incu}]
+                  \>$P$         \>$A$\\
+        $NE$       \>$0,2$       \>$0,2$\\
+        $E$       \>$-3,-1$       \>$1,1$
+ \end{game}
+\end{center}
+%Existen 2 equilibrios de Nash. Alguno parece m\'as \textit{creible} que otro?
+\end{frame}
+
+\iffalse
+\begin{frame}{Forma Extensiva}{Ejemplo 1b}
+\begin{center}
+\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+%Specify spacing for each level of the tree 
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,mark=at position .5 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzset{
+	% Two node styles for game trees; solid and hollow
+	solid node/.style={circle,draw, inner sep=1.5,fill=black},
+	hollow node/.style={circle,draw, inner sep=1.5}
+}
+% The Tree
+\node(0)[solid node, label=above:{$1$}]{}
+child{node(1)[hollow node, label=below:{$(0,0)$}]{} edge from parent node[left,xshift=-3]{$NI$}
+}
+child{node(2)[solid node, label=right:{$2$}]{}
+child{node[hollow node, label=below:{$(-1,1)$}]{} edge from parent node[left]{$NI$}}
+child{node[hollow node, label=below:{$(0,0)$}]{} edge from parent node[right]{$I$}}
+edge from parent node[right,xshift=3]{$I$}
+};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+\fi
+
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+\begin{center}
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw, inner sep=1.5,fill=black},
+hollow node/.style={circle,draw, inner sep=1.5}
+}
+% Specify spacing for each level of the tree
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% The Tree
+\node(0)[solid node, label=above:{$1$}]{}
+child{node(1)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(3,5)$}]{}
+edge from parent node[left]{$C$}}
+child{node[hollow node, label=below:{$(0,3)$}]{}
+edge from parent node[right]{$D$}}
+edge from parent node[left,xshift=-3]{$C$}
+}
+child{node(2)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(5,0)$}]{}
+edge from parent node[left]{$C$}}
+child{node[hollow node, label=below:{$(1,1)$}]{}
+edge from parent node[right]{$D$}}
+edge from parent node[right,xshift=3]{$D$}
+};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+	\begin{wideitemize}
+		\item<1-> $N=\{ 1, 2 \}$.
+		\item<2-> $H = \{ \emptyset, (C), (D), (C,C), (C,D), (D,C), (D,D) \}$.
+		\item<3-> $P(\emptyset) = 1$ y $P(h)= 2$ para $h \notin Z$ y $h \neq \emptyset$
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+\begin{wideitemize}
+	\item Funciones de utilidad
+		\begin{align*}
+			U_{1}(z) = \begin{cases}
+				3 & \text{ si } z = (C,C) \\
+			   0 & \text{ si } z = (C,D) \\
+			   5  & \text{ si } z = (D,C) \\
+			   1  & \text{ si } z = (D,D)
+			\end{cases} \\
+			U_{2}(z) = \begin{cases}
+				5 & \text{ si } z = (C,C) \\
+			   3 & \text{ si } z = (C,D) \\
+			   0  & \text{ si } z = (D,C) \\
+			   1  & \text{ si } z = (D,D)
+			\end{cases}
+		\end{align*}
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Estrategias}
+\begin{wideitemize}
+	%\item<1-> Definamos el set de historias donde le corresponde elegir al jugador $i$. Entonces $H_{i} = \{ h \in H\setminus Z \text{  s.t.  } P(h)=i \}$.
+	\item<2-> Una estrategia del juego extensivo para $i \in N$ es una funci\'on que asigna una acci\'on $A_{i}(h_{i})$ para elemento de $H_{i}$. 
+	\begin{align*}
+		S_{i} : H_{i} \rightarrow \times_{\forall h_{i} \in H_{i}} A_{i}(h_{i})
+	\end{align*} Entonces $s_{i} \in S_{i}$, donde $s_{i}$ indica una estrategia espec\'ifica que pertenece al set $S_{i}$.
+	\item<3-> Para cada perfil de estrategias $s = (s_{i})_{i\in N}$ en el juego extensivo, definimos un resultado $O(s)$ como la historia terminal que resulta cuando cada jugador $i \in N$ sigue el perfil de estrategia $s$.
+\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+	\begin{wideitemize}
+		\item<1-> Escribamos las estrategias $s_{i} \in S_{i}$ para el jugador $i$. Primero calculamos las historias donde el jugador $i$ tiene que decidir una acci\'on, pongamos estas historias en el set $H_{i}$.
+		\begin{wideitemize}
+			\item<2->[--] $H_{1} = \{ \emptyset \}$ y $S_{1} = \{ C, D \}$.
+			\item<3->[--] $H_{2} = \{ \{(C)\}, \{(D)\} \}$ y $S_{2} = \{ CC, CD, DC, DD \}$.
+		\end{wideitemize}
+		\item<4-> Por lo tanto, 
+		\begin{align*}
+		S = & \{ (C,CC), (C,CD), (C,DC), (C,DD), \\
+		& (D,CC), (D,CD), (D,DC), (D,DD) \}
+		\end{align*}
+		\item<5-> Entonces, por ejemplo $O( (C,CC) ) = (C,C)$, $O( (D,CD) ) = (D,D)$, $O( (C,DC) ) = (C,D)$ y asi sucesivamente.
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Equilibrio de Nash}
+	\begin{wideitemize}
+		\item<1-> Un equilibrio de Nash en un juego extensivo con informaci\'on perfecta $\big< N, H, P, (U_{i}) \big>$ es un perfil de estrategias $s^{*}$ tal que para cada jugador $i \in N$ tenemos
+		\begin{align*}
+			U_{i} \Big(O(s_{i}^{*},s_{-i}^{*}) \Big) \geq U_{i} \Big(O(s_{i},s_{-i}^{*}) \Big)
+		\end{align*} para cada estrategia $s_{i} \in S_{i}$ del jugador $i$.
+		\item<2-> Podemos reformular el juego de forma extensiva con informaci\'on perfecta a una forma estrat\'egica.
+		\begin{wideitemize}
+			\item<3->[--] La forma de hacer esto, asumir que $A_{i} = S_{i}$ y expresar el juego extensivo en forma matricial.
+			\item<4->[--] Por lo que podemos transformar, $\big< N, H, P, (U_{i}) \big>$ en $\big< N, (S_{i}), (U_{i}) \big>$.
+		\end{wideitemize}
+	\end{wideitemize}	
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+	\begin{center}
+	 \begin{game}{2}{4}[\textbf{1}][\textbf{2}]
+                  \>$CC$        \>$CD$   \>$DC$  \>$DD$   \\
+        $C$       \>$3,5$       \>$3,5$  \>$0,3$ \>$0,3$  \\
+        $D$       \>$5,0$       \>$1,1$  \>$5,0$ \>$1,1$
+ \end{game}
+\end{center}
+
+Y los equilibrios de Nash son $\{ (C,CD), (D,DD) \}$. Tenemos que pensar que cada estrategia es un plan de contingencia a cada historia que ocurre. 
+\begin{wideitemize}
+	\item Para el jugador $2$, el primer equilibrio indica que si $h=(C)$, se elige $C$, mientras que si $h=(D)$, se elige $D$.
+	\item Para el jugador $2$, el segundo equilibrio indica que si $h=(C)$, se elige $D$, mientras que si $h=(D)$, se elige $D$.
+\end{wideitemize} ambos son razonables?
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+\begin{center}
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw, inner sep=1.5,fill=black},
+hollow node/.style={circle,draw, inner sep=1.5}
+}
+% Specify spacing for each level of the tree
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% The Tree
+\node(0)[solid node, label=above:{$1$}]{}
+child{node(1)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(3,5)$}]{}
+edge from parent node[left]{$C$}}
+child{node[hollow node, label=below:{$(0,3)$}]{}
+edge from parent node[right]{$D$}}
+edge from parent node[left,xshift=-3]{$C$}
+}
+child{node(2)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(5,0)$}]{}
+edge from parent node[left]{$C$}}
+child{node[hollow node, label=below:{$(1,1)$}]{}
+edge from parent node[right]{$D$}}
+edge from parent node[right,xshift=3]{$D$}
+};
+\end{tikzpicture}
+\end{center}
+$s=(D,DD)$ supone que si $h=(\emptyset,C)$, el jugador $2$ elige $D$, lo cual (\textbf{si nos encontramos en esa historia}) no es lo que m\'as le conviene a $2$ (le convendr\'ia $C$!). Entonces equilibrio de Nash puede generar equilibrios \textit{poco creibles}.
+\end{frame}
+
+
+\begin{frame}{Forma Extensiva}{Subgame Perfect Equilibrium}
+	\begin{wideitemize}
+		\item<1-> El subjuego del juego extensivo con informaci\'on perfecta que sigue a una historia $h\in H \setminus Z$; es el juego extensivo $\Gamma (h) = \big< N, H|_{h}, P|_{h}, (U_{i}|_{h}) \big>$, donde $h' \in H|_{h}$ cumple $(h,h') \in H$, $P|_{h} = P(h,h')$ para cada $h' \in H|_{h}$ y $U_{i}|_{h}$ es definido como $U_{i}|_{h}(h') \geq U_{i}|_{h}(h'')$ si $U_{i}((h,h')) \geq U_{i}((h,h''))$.
+		\item<2-> Un Subgame Perfect Equilibrium (SPE) de un juego extensivo con informaci\'on perfecta es un perfil de estrategias $s^{*}$ tal que para cada jugador $i \in N$ y cada historia no terminal $h \in H \setminus Z$ donde $P(h) = i$ tenemos
+		\begin{align*}
+			U_{i} \Big(O(s_{i}^{*}|_{h},s_{-i}^{*}|_{h}) \Big) \geq U_{i} \Big(O(s_{i}|_{h},s_{-i}^{*}|_{h}) \Big)
+		\end{align*} para cada estrategia $s_{i}$ del jugador $i$ en el subjuego $\Gamma(h)$.
+		\item<3-> Entonces SPE es una refinamiento del equilibrio de Nash.
+	\end{wideitemize}	
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 2}
+\begin{wideitemize}
+	\item<1-> El SPE ser\'a $(C,CD)$.
+	\item<2-> Para encontrarlo, empiece definiendo subjuegos desde el final del juego inicial.
+	\item<3-> Procediendo de esta manera, se encuentra el SPE.
+	\item<4-> A diferencia de $(D,DD)$, las acciones del jugador $2$ son \'optimas para cada subjuego (del juego original).
+	\begin{wideitemize}
+		\item<5->[--] Bajo $s=(D,DD)$, para el subjuego que empieza con $h=(C)$, $s_{2} = DD$ implica que el jugador $2$ elija $D$ cuando obtendr\'ia mayor beneficio eligiendo $C$.
+		\item<6->[--] Bajo $s=(C,CD)$, el jugador $2$ siempre obtiene el mayor beneficio para cada subjuego!
+	\end{wideitemize}
+\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Forma Extensiva}{Ejemplo 3 (Bach-Stravinsky Secuencial)}
+\begin{center}
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw, inner sep=1.5,fill=black},
+hollow node/.style={circle,draw, inner sep=1.5}
+}
+% Specify spacing for each level of the tree
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% The Tree
+\node(0)[solid node, label=above:{$1$}]{}
+child{node(1)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(2,1)$}]{}
+edge from parent node[left]{$B$}}
+child{node[hollow node, label=below:{$(0,0)$}]{}
+edge from parent node[right]{$S$}}
+edge from parent node[left,xshift=-3]{$B$}
+}
+child{node(2)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(0,0)$}]{}
+edge from parent node[left]{$B$}}
+child{node[hollow node, label=below:{$(1,2)$}]{}
+edge from parent node[right]{$S$}}
+edge from parent node[right,xshift=3]{$S$}
+};
+\end{tikzpicture}
+\end{center}
+Ventaja por mover primero!
+\end{frame}
+
+
+\begin{frame}{Forma Extensiva}{Ejemplo 4 (Halc\'on o Paloma Secuencial)}
+\begin{center}
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw, inner sep=1.5,fill=black},
+hollow node/.style={circle,draw, inner sep=1.5}
+}
+% Specify spacing for each level of the tree
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% The Tree
+\node(0)[solid node, label=above:{$2$}]{}
+child{node(1)[solid node, label=above:{$1$}]{}
+child{node[hollow node, label=below:{$(3,3)$}]{}
+edge from parent node[left]{$P$}}
+child{node[hollow node, label=below:{$(4,1)$}]{}
+edge from parent node[right]{$H$}}
+edge from parent node[left,xshift=-3]{$P$}
+}
+child{node(2)[solid node, label=above:{$1$}]{}
+child{node[hollow node, label=below:{$(1,4)$}]{}
+edge from parent node[left]{$P$}}
+child{node[hollow node, label=below:{$(0,0)$}]{}
+edge from parent node[right]{$H$}}
+edge from parent node[right,xshift=3]{$H$}
+};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 4b (Alto o Bajo Secuencial)}
+\begin{center}
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw, inner sep=1.5,fill=black},
+hollow node/.style={circle,draw, inner sep=1.5}
+}
+% Specify spacing for each level of the tree
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% The Tree
+\node(0)[solid node, label=above:{$1$}]{}
+child{node(1)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(0,0)$}]{}
+edge from parent node[left]{$L$}}
+child{node[hollow node, label=below:{$(-5,5)$}]{}
+edge from parent node[right]{$H$}}
+edge from parent node[left,xshift=-3]{$L$}
+}
+child{node(2)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(5,-5)$}]{}
+edge from parent node[left]{$L$}}
+child{node[hollow node, label=below:{$(0,0)$}]{}
+edge from parent node[right]{$H$}}
+edge from parent node[right,xshift=3]{$H$}
+};
+\end{tikzpicture}
+\end{center}
+Ventaja de mover segundo!
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Mas ejemplos (Tadelis 2013, Cap 8)}
+	\begin{wideitemize}
+		\item<1-> Juego del Cienpies.
+		\item<2-> MAD (Mutually Assured Destruction).
+		\item<3-> Juego del Ultimatum.
+	\end{wideitemize}
+\end{frame}
+
+
+\iffalse
+\begin{frame}{Forma Extensiva}{Ejemplo 5}
+	\begin{wideitemize}
+		\item<1-> Asuma un juego similar al de Cournot visto antes.
+		\item<2-> Duopolio con $c_{1} = c_{2} = 0$ con $P = 1 - Q$.
+		\item<3-> Pero ahora, $1$ se mueve primero.
+		\item<4-> Esta version, con movimientos secuenciales, se denomina Stackelberg.
+	\end{wideitemize}
+\end{frame}
+
+
+\begin{frame}{Forma Extensiva}{Ejemplo 6}
+	\begin{wideitemize}
+		\item<1-> Consideremos un juego en $3$ periodos.
+		\begin{wideitemize}
+			\item<2->[--] En el primer periodo, el incumbente decide ofrecer $1$ o $2$ productos.
+			\item<3->[--] En el segundo periodo, la entrante decide si entrar o no. En particular, asumamos que el producto que ofrece el entrante compite directamente con el segundo producto que podr\'ia ofrecer el incumbente. Eso significa que obtiene $0$ si el incumbente ofrece el segundo producto. La entrante tambi\'en debe hacer un pago $e$ si entra.
+			\item<4->[--] En el tercer periodo, las firmas deciden simultaneamente sus precios y todas las decisiones se realizan.
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 6}
+	\begin{wideitemize}
+		\item<1-> Si la entrada se da en el segundo periodo, las firmas obtienen beneficios $\Pi^{duo}_{i}(k)$ (en el tercer periodo) donde $k$ es el n\'umero de producto que ofrece el incumbente. 
+		\begin{wideitemize}
+			\item<2->[--] Entonces, si el incumbente decide un producto, la entrante obtiene $\Pi^{duo}_{2}(1) - e$; mientras que si decide dos productos obtiene $0 - e$. Por su parte, el in
+			\item<3->[--] Por su parte, el incumbente obtiene $\Pi^{d}_{1}(1)$ o $\Pi^{d}_{1}(2)$ en el tercer dependiendo de su decision en el segundo periodo (y asumiendo que la entrante entr\'o al mercado).
+		\end{wideitemize}
+	\end{wideitemize}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 6}
+\begin{center}
+\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+%Specify spacing for each level of the tree 
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+\tikzstyle arrowstyle=[scale=1]
+\tikzstyle directed=[postaction={decorate,decoration={markings,mark=at position .5 with {\arrow[arrowstyle]{stealth}}}}]
+\tikzset{
+	% Two node styles for game trees; solid and hollow
+	solid node/.style={circle,draw, inner sep=1.5,fill=black},
+	hollow node/.style={circle,draw, inner sep=1.5}
+}
+% The Tree
+\node(0)[solid node, label=above:{$\text{Incumbente}$}]{}
+child{
+node(1)[solid node, label=left:{$\text{Entrante}$}]{}
+child{node[hollow node, label=below:{$\dbinom{\Pi^{duo}_{1}(1)}{\Pi^{d}_{2}(1) - e}$}]{} edge from parent node[left]{$\text{E}$}}
+child{node[hollow node, label=below:{$\dbinom{\Pi^{m}(1)}{0}$}]{} edge from parent node[right]{$\text{NE}$}}
+edge from parent node[left,xshift=-3]{$\text{k=1}$}
+}
+child{
+node(2)[solid node, label=right:{$\text{Entrante}$}]{}
+child{node[hollow node, label=below:{$\dbinom{\Pi^{duo}_{1}(2)}{0 - e}$}]{} edge from parent node[left]{$\text{E}$}}
+child{node[hollow node, label=below:{$\dbinom{\Pi^{m}(2)}{0}$}]{} edge from parent node[right]{$\text{NE}$}}
+edge from parent node[right,xshift=3]{$\text{k=2}$}
+};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 6}
+\begin{wideitemize}
+	\item<1-> La proliferaci\'on de productos se da si $\Pi^{m}(2) > \Pi^{duo}_{1}(1)$. Al incumbente le conviene ofertar $2$ productos solo para evitar la entrada de la firma entrante.
+	\item<2-> Entonces 
+	\begin{align*}
+		s^{*} = \begin{cases}
+			(2,(E,NE)) &\text{ si } \Pi^{m}(2) > \Pi^{duo}_{1}(1) \\
+			(1,(E,NE)) &\text{ si } \Pi^{m}(2) \leq \Pi^{duo}_{1}(1)
+		\end{cases}
+	\end{align*} es un $SPE$.
+\end{wideitemize}
+\end{frame}
+\fi
+
+\iffalse
+\begin{frame}{Forma Extensiva}{Ejemplo 6}?
+	About off-equilibrium (Borgers, 56-57).
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplo 6}?
+	TODO. Behavioral strategies (mixing in dynamic games basically). Maliath pp. 48
+\end{frame}
+
+\begin{frame}{Forma Extensiva}{Ejemplos}?
+	Mutual Assured Destruction (Tadelis, 163).  Ultimatum game (Felix, 108). Gift exchange game (Felix, 115 o 127).
+\end{frame}
+\fi
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\end{document}
