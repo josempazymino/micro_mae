@@ -90,42 +90,43 @@
 \begin{frame}{Elementos}
 	\begin{wideitemize}
 		\item<1-> N\'umero finito de jugadores $N$.
-		\item<2-> Set finito de estados de la naturaleza $\Omega$ (con elemento $w$).
-		\item<3-> Para cada jugador $i \in N$
+		\item<2-> Para cada jugador $i \in N$
 		\begin{wideitemize}
-			\item<4-> Set de acciones $A_{i}$
-			\item<5-> Set de se\~nales (o set de tipos) que pueden ser observadas por cada jugador $T_{i}$ y una funci\'on de se\~nal $\tau_{i}:\Omega \rightarrow T_{i}$.
-			\item<6-> Probabilidad $p_{i}$ en $\Omega$ (probabilidad prior) tal que $p_{i}(\tau_{i}^{-1}(t_{i}))$ para todo $t_{i} \in T_{i}$.
-			\item<7-> Relaci\'on de preferencia $\succsim_{i}$ sobre $A \times \Omega$.
+			\item<3->[--] Set de acciones $A_{i}$
+			\item<4->[--] Set de se\~nales (o set de tipos; o el espacio de tipos) $\Theta_{i}$ (que puede ser discreto o cocntinuo) y con elemento $\theta_i$.
+			\item<5->[--] Probabilidad $p_{i}$ que indica la creencia del juegador $i$ sobre tipos de otros jugadores; es decir $p_{i}(\theta_{-i}|\theta_{i})$. Esto es la probabilidad posterior de saber el tipo del rival condicional a que recibi mi propio tipo.
+			\item<6->[--] Funci\'on de utilidad $u_{i}: A \times \Theta_{i} \rightarrow R$.
 		\end{wideitemize}
 	\end{wideitemize}
 \end{frame}
 
 \begin{frame}{Elementos}
 	\begin{wideitemize}
-		\item<1-> $\Omega$ recoge todas las posibilidades sobre las que se tiene informaci\'on incompleta.
-		\item<2-> Note que puede haber una diferencia entre el estado $w$ y la se\~nal que se revela a cada jugador $t_{i}$.
-		\item<3-> Tambi\'en jugadores pueden tener distintas probabilidades prior (pueden diferir en la probabilidad que piensan los estados de la naturaleza ocurren).
-		\item<4-> Decimos que cuando el juego ocurre cada jugador conoce su tipo.
+		\item<1-> Por lo tanto, un juego bayesiano est\'atico se puede definir como: $<N, (A_{i}), (\Theta_{i}, (u_{i}(.;\theta_{i}) \theta_{i} \in \Theta_{i}),(p_{i}))>$.
+		\item<2-> Notemos que la utilidad esta definida no solo respecto al set $A$ (acciones de todos) pero tambi\'en del tipo espec\'ifico que recibe el individuo (dado su set $\Theta_{i}$).
+		\item<3-> Los tipos de los jugadores son sampleados desde una funcion de probabilidad conjunta $p$. Por lo tanto, $p_{i}$ es marginal a esta. En otras palabras, existe funci\'on $f: \times \Theta_{i} \rightarrow [0,1]$.
+		\item<4-> Una forma conveniente de entender los tipos es que son determinados aleatoriamente por la Naturaleza. Es decir, uno puede crear un jugador ficticio que se mueve primero que todos.
+		\item<5-> Si se asume que $u_{i}$ solo depende en propio tipo entonces es un problema de \textbf{valores privados}, mientras que si depende en todos los tipos es un problema de \textbf{valores comunes}.
 	\end{wideitemize}
 \end{frame}
 
-\begin{frame}{Elementos}
+\begin{frame}{Equilibrio de Nash Bayesiano}
 	\begin{wideitemize}
-		\item<1-> No se pueden asumir los estados por separado (como juegos separados). En un estado especifico, hay que tener creencias sobre lo que harian otros jugadores en otros estados. 
-		\item<2-> Entonces un equilibrio de Nash de un juego Bayesiano $<N, \Omega, (A_{i}), (T_{i}), (\tau_{i}), (p_{i}), (U_{i})>$ es un equilibrio de Nash del juego estrategico $G^{*}$ en donde para cada $i \in N$ y posible se\~nal $t_{i} \in T_{i}$, hay un jugador referido como $(i,t_{i})$ (\textit{tipo }$t_{i}$ \textit{ del jugador }$i$).
-		\item<3-> Entonces una estrategia para el jugador $i$ es una funci\'on $s_{i}: T_{i} \rightarrow A_{i}$ y un perfil de estrategia $s = (s_{i})$
-	\end{wideitemize}
-\end{frame}
-
-\begin{frame}{Equilibrio de Nash del juego bayesiano}
-	\begin{wideitemize}
-		\item<1-> Un perfil de estrategias $s^{*}$ es un equilibrio de Nash del juego bayesiano si para cada $i \in N$ y $t_{i} \in T_{i}$,
+		\item<1-> Una estrategia es una funci\'on $s_{i}: \Theta_{i} \rightarrow A_{i}$.
+		\item<2-> Es decir, un jugador debe seleccionar que hacer dependiendo a cada tipo posible que puede ser. Se dice que la estrategia es tipo-contingente.
+		\item<3-> Por lo tanto, en el juego bayesiano $<N, (A_{i}), (\Theta_{i}, (u_{i}(.;\theta_{i}) \theta_{i} \in \Theta_{i}),(p_{i}))>$, un perfil de estrategias $s^{*} = (s_{1}^{*}(.), \dots, s_{N}^{*}(.))$ es un equilibrio de Nash bayesiano si para cada jugador $i$, para cada tipo del jugador $i$ $(\Theta_{i})$ y para cada $a_{i} \in A_{i}$, $s_{i}^{*}(.)$ se cumple que 
 		\begin{align*}
-			\tilde{u}(s^{*};t_{i}) \geq \tilde{u}_{i}(a_{i},s_{-i}^{*};t_{i})
-		\end{align*} para todo
+			&\sum_{\theta_{-i} \in \Theta_{-i}} p_{i}(\theta_{-i}|\theta_{i}) u_{i}(s_{i}^{*}(\theta_{i}), s_{-i}^{*}(\theta_{-i});\theta_{i}) \geq \\
+			&\sum_{\theta_{-i} \in \Theta_{-i}} p_{i}(\theta_{-i}|\theta_{i}) u_{i}(a_{i}, s_{-i}^{*}(\theta_{-i});\theta_{i})
+		\end{align*}
+		\item<4-> Es decir, nadie se quiere desviar de $s_{i}^{*}(.)$.
+	\end{wideitemize}
+\end{frame}
 
-
+\begin{frame}{Ejemplos}
+	\begin{wideitemize}
+		\item<1-> Bach o Stravinsky con una parte no informada.
+		\item<2-> Cournot duopolio con una parte no informada.
 	\end{wideitemize}
 \end{frame}
 

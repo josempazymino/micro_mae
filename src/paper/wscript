@@ -7,7 +7,7 @@ def build(ctx):
 	'0_introduccion','1_estatico_completa','ayudantia1_estatico_completa',
 	'sobre_ti',
 	'2_dinamico_completa', 'ayudantia2_dinamica_completa',
-	'3_estatico_incompleta']:
+	'3_estatico_incompleta', 'tarea_1']:
 		ctx(features='tex',
 		source=s + '.tex',
 		prompt=1,name=s)

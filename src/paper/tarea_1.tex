@@ -1,0 +1,137 @@
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{sgamevar, tikz} % Game theory packages
+\usepackage{pgfplots}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Microeconom\'ia Aplicada (MAE)}
+\author{Tarea 1 \\ Profesor: Jose Manuel Paz y Mi\~no \\ Ayudante: Vicente Merrill}
+\date{}
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada, Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+% \usepackage{array, xcolor}
+% \usepackage{color,hyperref}
+% \definecolor{clemsonorange}{HTML}{EA6A20}
+% \hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+%===================Startup========================
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+
+Instrucciones:
+\begin{itemize}
+	\item Realizar individualmente o en grupos de 2.
+	\item Escribir en latex.
+	\item Adjuntar codigos usados en ap\'endice.
+	\item Entrega: Lunes 5 de Mayo; mediodia (12:00pm).
+\end{itemize}
+
+
+\section*{Juegos Est\'aticos con Informaci\'on Completa}
+
+1.- \cite{vignolo2005envy} introduce envidia en las funciones de utilidad de individuos como una manera de reducir la multiplicidad de equilibrios. Para evaluar las implicancias de esto, usaremos la siguiente variante del juego Mozart o Mahler visto en clase
+
+\begin{center}
+ \begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  \>$Mo$         \>$Ma$\\
+        $Mo$       \>$10,10$       \>$y,x$\\
+        $Ma$       \>$y,x$       \>$5,5$
+\end{game}
+\end{center}
+
+\begin{enumerate}
+	\item Asuma $\alpha_1 = \alpha_2 = 0.5$, $y=2$ y $x \in [0,4]$. Indique el o los equilibrios de Nash para distintos valores de $x$. Existe alg\'un perfil de acciones que Pareto domine el (o los) equilibrios de Nash encontrados? Adicionalmente, explique intuitivamente c\'omo se compara este juego (y su equilibrio) con la versi\'on vista en clase bajo $\alpha_1 = \alpha_2 = 0$ y $x=y=0$.
+
+	\item Asuma $y=2$. Se desea conocer la relaci\'on entre $\alpha_{1} = \alpha_{2} = \alpha \in [0,1]$ y $x \in [0,4]$ tal que $(Ma,Ma)$ es el \'unico equilibrio de Nash. En ese sentido, escriba las condiciones para que esto se cumpla.
+
+	\item Asuma que en lugar del juego de Mozart o Mahler, tiene el juego de Bach o Stravinsky (tal como fue visto en clase). ¿La inclusi\'on de envidia permite obtener un equilibrio de Nash \'unico? Responda usando el Teorema 1 del documento.
+\end{enumerate}
+
+\section*{Juegos Din\'amicos con Informaci\'on Completa}
+
+2.- \cite{iqbal2017kidnapping} desarrolla un modelo de secuestro, que es una extensi\'on del cl\'asico modelo de \cite{selten1977simple}. En el trabajo presenta dos versiones del modelo, la cl\'asica (de \cite{selten1977simple}) y una generalizaci\'on propuesta.
+\begin{enumerate}
+	\item Indique (sin resolver) cu\'ales son las diferencias entre ambos modelos.
+
+	\item Escriba las posibles estrategias de cada jugador. Adicionalmente, indique cuantos subjuegos hay.
+
+	\item Asuma que los secuestrados solo pueden pedir entre $D = \{0.5\bar{D}, \bar{D}\}$. Adicionalmente, la familia del secuestrado enfrenta restricciones de liquidez, por lo que solo puede ofrecer $C = \{0, 0.5\bar{D}\}$. 
+	\begin{enumerate}
+		\item Es posible encontrar un equilibrio perfecto en subjuegos donde el resultado (outcome) indica que los secuestradores deben racionalmente asesinar al secuestrado? ¿Bajo que condiciones?
+		\item Si adicionalmente asume que $q_{0} = 1$ y $q_{1} = 0$, resuelva todo el juego y obtenga el o los equilibrios perfectos en subjuegos.
+		\item Si adicionalmente asume que $q_{0} = 0$ y $q_{1} = 1$, resuelva todo el juego y obtenga el o los equilibrios perfectos en subjuegos.
+	\end{enumerate}
+
+	\item Asuma el modelo cl\'asico de \cite{selten1977simple}\footnote{Es decir, $W_{1} = W_{2} = W$ y $q_{0} = q_{1} = q$.}. Adicionalmente, asuma $q=0.5$, $a = 0.5$, $Z = 10$, $X = 5$, $Y = 7$ y $W \in [2,8]$. Se conoce que la policia tiene la siguiente funci\'on de utilidad, $u_{policia} = -\text{Prob(secuestrado ejecutado)}$. De acuerdo al resultado de acuerdo al equilibrio perfecto en subjuegos para distintos valores de $W$ grafique la evoluci\'on de $u_{policia}$ (gr\'afico 2.1).
+\end{enumerate}
+
+
+3.- \cite{gershman2015economic} modela la respuesta racional a envidia en un contexto de dos jugadores con decisiones de produccion, ocio y contra-envidia.
+\begin{enumerate}
+	\item Escriba las posibles estrategias de cada jugador.
+	\item Cree un programa de computadora (c\'odigo)\footnote{Puede usar cualquier software.} tal que dados los par\'ametros $K_{1}, K_{2}, \theta, \tau$ el equilibrio perfecto en subjuegos y las utilidades de cada individuo.
+	\item Usando el programa anterior, asuma $K_{2} = 1$, $\theta = 0.25$, $\tau = 0.5$ y $K_{1} \in \{1, 2, 3, 4, \dots, 8\}$ y grafique $R_{1}^{*}$ y $R_{2}^{*}$ (gr\'afico 3.1), $U_{1}^{*}$ y $U_{2}^{*}$ (gr\'afico 3.2).
+	\item Usando los par\'ametros y el programa de la pregunta anterior, asuma que el agente 2 redistribuye parte de su riqueza para evitar un equilibrio con envidia\footnote{Ver Proposicion 2.} Grafique (grafico 3.3) $T^{*}$ y $\bar{T}$ e interprete. En otras palabras, que significa cada variable y la diferencia $\bar{T} - T^{*}$.
+\end{enumerate}
+
+
+\section*{Juegos Est\'aticos con Informaci\'on Incompleta}
+
+4. Dos firmas deciden simultaneamente entrar o no a un mercado. La firma $i$, tiene un costo de entrada $c_{i}$ que se distribuye como una uniforme entre $0$ y $10$. El beneficio de la firma $i$ es $\pi^{m} - c_{i}$ si es la unica que entra, y $\pi^{d} -c_{i}$ si ambas entran. Adicionalmente, si ninguna entra ambas obtienen beneficio igual a $0$. Asuma que $\pi^{m} > \pi^{d} > 0$.
+\begin{enumerate}
+	\item Escriba cu\'ales son los tipos y las estrategias de las firmas.
+	\item Resuelva usando el equilibrio de Nash bayesiano.
+	\item Indique como se ve afectado el equilibrio ante incrementos en $\pi^{m}$ y $\pi^{d}$.
+	\item ¿Cu\'al es la probabilidad de que ambas firmas entren, solo una entre y que ninguna entre?
+	\item Imagine que la firma 2 se sabe tiene un valor de $c_{2} = 2$. Compare los beneficios de esta firma respecto del problema original e indique si gana o pierde.
+\end{enumerate}
+
+\bibliographystyle{ecca}
+\bibliography{references_micro_mae}
+
+
+
+\end{document}  
