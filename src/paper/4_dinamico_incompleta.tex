@@ -67,12 +67,12 @@
 %   \insertframenumber\,/\,\inserttotalframenumber}
 
 \begin{document}
-\title{Econom\'ia Aplicada}   
+\title{Microeconom\'ia Aplicada}   
 \subtitle{Teor\'ia de Juegos: \\
-Juegos Dinamicos con Informaci\'on Incompleta}   
+Juegos Din\'amicos con Informaci\'on Incompleta}   
 \author[Paz y Mino ]{Jos\'e Manuel Paz y Mi\~no}
 \institute[shortinst]{FEN UCHILE}
-\date{} 
+\date{Oto\~no 2025} 
 
 \frame{\titlepage} 
 
@@ -80,6 +80,7 @@ Juegos Dinamicos con Informaci\'on Incompleta}
 \begin{wideitemize}
 \item<1-> Pensemos en un juego d\'inamico con informaci\'on completa.
 \item<2-> Es posible que un jugador no sepa la historia que se jug\'o anteriormente.
+\item<3-> Anteriormente hemos supuestos distintos casos, pero vamos a explorar si \textit{en equilibrio} podemos encontrar una soluci\'on consistente.
 \end{wideitemize}
 \end{frame}
 
@@ -100,7 +101,7 @@ hollow node/.style={circle,draw, inner sep=1.5}
 \node(0)[solid node, label=above:{$E$}]{}
 
 child{node(1)[hollow node, label=below:{$(0,2)$}]{}
-edge from parent node[left,xshift=-10]{$\text{s}$}
+edge from parent node[left,xshift=-10]{$\text{w}$}
 }
 child{node(2)[solid node, label=right:{}]{}
 child{node[hollow node, label=below:{$(-1,-1)$}]{} edge from parent node[left]{$P$}}
@@ -123,6 +124,7 @@ edge from parent node[right,xshift=10]{$\text{e2}$}
 El jugador $I$ no sabe si la historia anterior fue $h=e1$ o $h=e2$!
 \end{frame}
 
+\iffalse
 \begin{frame}{Introducci\'on}
 	\begin{wideitemize}
 		\item<1-> Para resolver este juego debemos introducir nuevos t\'erminos.
@@ -137,27 +139,36 @@ El jugador $I$ no sabe si la historia anterior fue $h=e1$ o $h=e2$!
 		\end{wideitemize}
 	\end{wideitemize}
 \end{frame}
+\fi
+
+\begin{frame}{Introducci\'on}{Recordando sets de informaci\'on (y sets de sets de informaci\'on)}
+	\begin{wideitemize}
+		\item<1-> $H_{i}$ es el set de sets de informaci\'on del jugador $i$. Por lo tanto, $h_{i} \in H_{i}$ es un set de informaci\'on.
+		\item<2-> Dentro de un set de informaci\'on es posible tener una o m\'as historias no terminales. Por lo tanto, para $h,h' \in h_{i}$, se tiene que $A(h)=A(h')$. 
+		\item<3-> Para $h_{i} \in H_{i}$, denotamos con $A(h_{i})$ el set $A(h)$ y $P(h_{i})$ el set $P(h)$. 
+	\end{wideitemize}
+\end{frame}
 
 \begin{frame}{Introducci\'on}{Ejemplo 1}
 	\begin{wideitemize}
 		\item<1-> En t\'erminos del Ejemplo 1,
 		\begin{align*}
-			\bar{I}_{E} &= \{ \{\emptyset\} \} \\
-			\bar{I}_{I} &= \{ \{ e1, e2 \} \}
-		\end{align*} y por lo tanto, una estrategia $S_{i}$ es una funci\'on 
+			H_{E} &= \{ \{\emptyset\} \} \\
+			H_{I} &= \{ \{ e1, e2 \} \}
+		\end{align*} donde $H_{E}$ y $H_{I}$ son los sets de sets de informaci\'on de ambos jugadores. Por lo tanto, una estrategia $S_{i}$ es una funci\'on 
 		\begin{align*}
-		S_{i}: \bar{I}_{i} \rightarrow \times_{\forall I_{i}\in \bar{I}_{i}} A(I_{i})
-		\end{align*}
+		S_{i}: H_{i} \rightarrow \times_{\forall h_{i}\in H_{i}} A(h_{i})
+		\end{align*} donde $h_{i}$ es un set de informaci\'on.
 	\end{wideitemize}
 \end{frame}
 
 \begin{frame}{Perfect Bayesian Equilibrium}
 	\begin{wideitemize}
-		\item<1-> Belief System es una funci\'on $\mu(I)(h)$ que indica la probabilidad que el jugador $P(I)$ asigna a la historia $h \in I$, condicional a que el juego llegue a $I$.
-		\item<2-> Definimos un assestment como $(s,\mu)$, donde $s=(s_{1},\dots s_{N})$ y $\mu=(\mu_{1},\dots, \mu_{N})$.
-		\item<3-> Un perfil de assestments $(s,\mu)$ es un Perfect Bayesian Equilibrium si
+		\item<1-> Belief System\footnote{Sistema de creencias} es una funci\'on $\mu(h_{i})(h)$ que indica la probabilidad que el jugador $P(h_{i})$ asigna a la historia $h \in h_{i}$, condicional a que el juego llegue a $h_{i}$.
+		\item<2-> Definimos un assesstment como $(s,\mu)$, donde $s=(s_{1},\dots s_{N})$ y $\mu=(\mu_{1},\dots, \mu_{N})$.
+		\item<3-> Un perfil de assesstments $(s,\mu)$ es un Perfect Bayesian Equilibrium si
 		\begin{wideitemize}
-			\item<4->[--] Para cada $i$ y todo $I_{i} \in \bar{I}_{i}$, $s_{i}$ es secuencialmente racional (maximiza el beneficio esperado una vez en $I_{i}$ y dado $\mu_{i}$ y $s_{-i}$).
+			\item<4->[--] Para cada $i$ y todo $h_{i} \in H_{i}$, $s_{i}$ es secuencialmente racional (maximiza el beneficio esperado una vez en $H_{i}$ y dado $\mu_{i}$ y $s_{-i}$).
 			\item<5->[--] Beliefs $\mu_{i}$ se actualizan usando la Regla de Bayes cada vez que se pueda.
 		\end{wideitemize}
 	\end{wideitemize}
@@ -166,31 +177,32 @@ El jugador $I$ no sabe si la historia anterior fue $h=e1$ o $h=e2$!
 \begin{frame}{Perfect Bayesian Equilibrium}{Ejemplo 1}
 \begin{wideitemize}
 	\item<1-> ¿C\'omo podriamos resolver este ejemplo? 
-	\item<2-> Sabemos que dado el set de informaci\'on $I_{I} = \{ e1, e2 \}$, este jugador para poder decidir $P$ o $NP$ debe suponer probabilidades sobre que historia ha ocurrido. 
+	\item<2-> Sabemos que dado el set de informaci\'on $h_{I} = \{ e1, e2 \}$, este jugador para poder decidir $P$ o $NP$ debe suponer probabilidades sobre que historia ha ocurrido. 
 	\item<3-> En ese sentido, asumamos que $I$ \textit{asume} que $E$ juega $e1$ con probabilidad $p$, juega $e2$ con probabilidad $q$ y $s$ con probabilidad $1-p-q$.
-	\item<4-> La pregunta, que probabilidad asigna entonces a $\mu(I_{I})(e1)$?\footnote{Como $I_{I}$ solo tiene dos elementos, $\mu(I_{I})(e2) = 1 - \mu(I_{I})(e1)$.}
+	\item<4-> La pregunta es entonces, qu\'e probabilidad asigna entonces a $\mu(h_{I})(e1)$?\footnote{Como $h_{I}$ solo tiene dos elementos, $\mu(h_{I})(e2) = 1 - \mu(h_{I})(e1)$.}
 \end{wideitemize}
 \end{frame}
 
 \begin{frame}{Perfect Bayesian Equilibrium}{Ejemplo 1a}
 \begin{wideitemize}
-	\item<1-> ¿Existe un equilibrio donde $s_{E} = e1$?
+	\item<1-> ¿Existe un equilibrio donde $s_{E} = e2$?
 	\begin{wideitemize}
 		\item<2->[--] Primero. Ver FIGURA.
-		\item<3->[--] Segundo. Aplicar regla de Bayes si es posible. Asume que e1 se da con prob p, e2 con prob q y s con prob 1-p-q. Adicionalmente, hay solo un tipo para $E$.
+		\item<3->[--] Segundo. Aplicar regla de Bayes si es posible. Asume que e1 se da con prob p, e2 con prob q y s con prob 1-p-q. 
+		%Adicionalmente, hay solo un tipo para $E$.
 		\begin{align*}
 			\mu = & \frac{ p }{ p + q } 
-		\end{align*} pero si $s_{E} = e1$, entonces $\mu = 1$.
+		\end{align*} pero si $s_{E} = e2$, entonces $\mu = 0$.
 		\item<4->[--] Tercero. Respuestas \'optimas. Entonces $s_{I} = NP$.
-		\item<5->[--] Cuarto. Acciones \'optimas. E no tiene incentivos a desviarse de $s_{1} = e1$.
+		\item<5->[--] Cuarto. Acciones \'optimas. E no tiene incentivos a desviarse de $s_{E} = e2$.
 	\end{wideitemize}
-	\item<6-> Entonces $s_{E} = e1$, $s_{I} = NP$ y $\mu = 1$ es un equilibrio perfecto bayesiano.
+	\item<6-> Entonces $s_{E} = e2$, $s_{I} = NP$ y $\mu = 0$ es un equilibrio perfecto bayesiano.
 \end{wideitemize}	
 \end{frame}
 
 \begin{frame}{Perfect Bayesian Equilibrium}{Ejemplo 1b, 1c}
 \begin{wideitemize}
-	\item<1-> ¿Existe un equilibrio donde $s_{E} = e2$? Y $s_{E} = s$?
+	\item<1-> ¿Existe un equilibrio donde $s_{E} = e1$?
 \end{wideitemize}	
 \end{frame}
 
@@ -269,8 +281,8 @@ Esto ocurre debido a que $I$ elige $NP$ cuando se encuentra en $I_{I}$. Por lo t
 
 \begin{frame}{Signalling Games}
 	\begin{wideitemize}
-		\item<1-> Existen ocasiones en las cuales alguna caracter\'istica de un jugador puede no ser conocida por su rival.
-		\item<2-> En el juego estas caracteristicas se denominan \textit{tipo}.
+		%\item<1-> Existen ocasiones en las cuales alguna caracter\'istica de un jugador puede no ser conocida por su rival.
+		%\item<2-> En el juego estas caracteristicas se denominan \textit{tipo}.
 		\item<3-> Un \textit{tipo} puede indicar si un juegador es agresivo o no, tiene costos altos o no, es vehemente o no, etc.
 		\item<4-> Asumiremos que la naturaleza determina el \textit{tipo} del jugador que 1 es. Si bien el jugador 2 no sabe que tipo 1 es, sabe con las probabilidades de distintos tipos.
 		\item<5-> En ese sentido, el jugador 1 es un jugador \textit{informado} (juega primero) y 2 es \textit{no informado} (juega luego).
@@ -309,7 +321,7 @@ VER PIZARRA
 	\begin{wideitemize}
 		\item<1-> ¿Es posible que exista un PBE donde el jugador 1 decida estudiar si es de alta productividad y no estudiar si es de baja? (equilibrio separador) Pasos.
 		\item<2-> Primero. Identificar en el arbol a que nos referimos. VER PIZARRA.
-		\item<3-> Segundo. Aplicar regla de Bayes si es posible. Notar que 2 tiene una particion $\bar{I}_{2}$ compuesta por 2 elementos $I_{2}^{1} = \{(PA,E), (PB,E)\}$ y $I_{2}^{2} = \{(PA,NE),(PB,NE)\}$. Asumamos que $\mu(I_{2}^{1})((PA,E))$ es la probabilidad de que estando en $I_{2}^{1}$ se de $(PA,E)$ y $\rho(I_{2}^{2})((PA,NE))$ es la probabilidad de que estando en $I_{2}^{2}$ se de $(PA,NE)$. Adicionalmente, especificamos $\alpha^{PA}$ y $\alpha^{PB}$ como las probabilidades de que el jugador 1 decida estudiar asumiendo la naturaleza eligio PA o PB. 
+		\item<3-> Segundo. Aplicar regla de Bayes si es posible. Notar que 2 tiene una particion $H_{2}$ compuesta por 2 elementos $h_{2}^{1} = \{(PA,E), (PB,E)\}$ y $h_{2}^{2} = \{(PA,NE),(PB,NE)\}$. Asumamos que $\mu(h_{2}^{1})((PA,E))$ es la probabilidad de que estando en $h_{2}^{1}$ se de $(PA,E)$ y $\rho(h_{2}^{2})((PA,NE))$ es la probabilidad de que estando en $h_{2}^{2}$ se de $(PA,NE)$. Adicionalmente, especificamos $\alpha^{PA}$ y $\alpha^{PB}$ como las probabilidades de que el jugador 1 decida estudiar asumiendo la naturaleza eligio PA o PB. 
 	\end{wideitemize}
 \end{frame}
 
@@ -333,8 +345,8 @@ VER PIZARRA
 	\begin{wideitemize}
 		\item<1-> Tercero. Respuestas \'optimas. ¿C\'omo responde el jugador 2 dada las acciones de 1 y sus valores de $\mu$ y $\rho$? 
 		\begin{wideitemize}
-			\item<2->[--] Bajo $I_{2}^{1}$ y $\mu = 1$. Prefiere M sobre A.
-			\item<3->[--] Bajo $I_{2}^{2}$ y $\rho = 0$. Prefiere A sobre M.
+			\item<2->[--] Bajo $h_{2}^{1}$ y $\mu = 1$. Prefiere M sobre A.
+			\item<3->[--] Bajo $h_{2}^{2}$ y $\rho = 0$. Prefiere A sobre M.
 		\end{wideitemize}
 		\item<4-> Cuarto. Acciones \'optimas. Dada la propuesta de estrategia para el jugador 1, ¿esta le conviene?
 		\begin{wideitemize}
@@ -379,15 +391,15 @@ VER PIZARRA
 	\begin{wideitemize}
 		\item<1-> Tercero. Respuestas \'optimas. ¿C\'omo responde el jugador 2 dada las acciones de 1 y sus valores de $\mu$ y $\rho$? 
 		\begin{wideitemize}
-			\item<2->[--] Bajo $I_{2}^{1}$ y $\mu \in [0,1]$. 
+			\item<2->[--] Bajo $h_{2}^{1}$ y $\mu \in [0,1]$. 
 			\begin{align*}
-				UE_{2}(M;I_{2}^{1},\mu) = & 10\mu + 0(1-\mu) = 10\mu \\
-				UE_{2}(A;I_{2}^{1},\mu) = & 4\mu + 4(1-\mu) = 4
+				UE_{2}(M;h_{2}^{1},\mu) = & 10\mu + 0(1-\mu) = 10\mu \\
+				UE_{2}(A;h_{2}^{1},\mu) = & 4\mu + 4(1-\mu) = 4
 			\end{align*} y elegir M es preferible si $UE_{2}(M;\mu) \geq UE_{2}(A;\mu)$ o $\mu \geq 2/5$.
 			\item<3->[--] Bajo $I_{2}^{2}$ y $\rho = 1/3$.
 			\begin{align*}
-				UE_{2}(M;I_{2}^{2},\rho) = & 10(1/3) + 0(2/3) = 10/3 \\
-				UE_{2}(A;I_{2}^{2},\rho) = & 4(1/3) + 4(2/3) = 4
+				UE_{2}(M;h_{2}^{2},\rho) = & 10(1/3) + 0(2/3) = 10/3 \\
+				UE_{2}(A;h_{2}^{2},\rho) = & 4(1/3) + 4(2/3) = 4
 			\end{align*} y elegir A es preferible.
 		\end{wideitemize}
 	\end{wideitemize}
@@ -404,7 +416,7 @@ VER PIZARRA
 		\begin{wideitemize}
 			\item<2->[--] Si PA. Decide NE y no le conviene desviarse.
 			\item<2->[--] Si PB. Decide NE y no le conviene desviarse.
-		\end{wideitemize} por lo tanto $s_{1} = (NE,NE)$, $s_{2} = (A,A)$, $\mu < 2/5$ y $\rho=1/3$ NO es un equilibrio perfecto bayesiano.
+		\end{wideitemize} por lo tanto $s_{1} = (NE,NE)$, $s_{2} = (A,A)$, $\mu < 2/5$ y $\rho=1/3$ es un equilibrio perfecto bayesiano.
 	\end{wideitemize}
 \end{frame}
 

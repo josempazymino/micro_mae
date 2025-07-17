@@ -1,0 +1,147 @@
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+%\usepackage{enumitem}
+\usepackage{sgamevar, tikz} % Game theory packages
+\usepackage{pgfplots}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Microeconom\'ia Aplicada (MAE)}
+\author{Solemne \\ Profesor: Jose Manuel Paz y Mi\~no \\ Ayudante: Vicente Merrill}
+\date{}
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada, Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+% \usepackage{array, xcolor}
+% \usepackage{color,hyperref}
+% \definecolor{clemsonorange}{HTML}{EA6A20}
+% \hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+%===================Startup========================
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+
+
+\section*{Problema 1 - Juegos Extensivo con Informaci\'on Completa (80 puntos)}
+
+En un programa de magister de una excelente universidad situada en el hemisferio sur existen 2 profesores (profesor A y profesor B). Estos profesores tienen que decidir que d\'ia tener la solemne y tambi\'en la dificultad del mismo. En espec\'ifico, el juego tiene las siguientes etapas:
+\begin{enumerate}[(i)]
+	\item Profesor A debe decidir si tiene la solemne Martes o Jueves.\footnote{Se puede entender que el Profesor A es Asociado mientras que B es Asistente. Esto puede justificar porque A decide primero.}
+	\item Profesor B observa decisi\'on del Profesor A y debe decidir si tiene la solemne Martes o Jueves.
+	\item Aqui existen dos posibilidades:
+	\begin{enumerate}[(a)]
+		\item Si Profesor A decide Martes y Profesor B Jueves entonces se tienen como pagos $(12,10)$. Mientras que si el Profesor A decide Jueves y el Profesor B Martes, $(8,10)$. Para ambos casos se puede entender que la utilidad derivada de elegir la dificultad de la solemne ya esta incorporada en los pagos, por lo que no es modelada.\footnote{Se puede asumir los profesores deciden una dificultad normal.}
+		\item Solo si los profesores tienen la solemne el mismo d\'ia, ambos juegan simult\'aneamente y deciden el nivel de dificultad de su solemne. Pueden decidir una dificultad m\'as baja de lo normal (L) o m\'as alta de lo normal (H). Tambi\'en se tienen dos casos:
+		\begin{enumerate}[{(iii, b)} (a)]
+			\item Si ambos deciden Martes.
+			\begin{center}
+ 				\begin{game}{2}{2}[\textbf{A}][\textbf{B}]
+                  				\>$H$         \>$L$\\
+        			$H$       \>$0,0$       \>$W+1,5$\\
+        			$L$       \>$7,W+1$       \>$W+\tau,W+\tau$
+				\end{game}
+			\end{center} donde $W \in [8,14]$.
+			\item Si ambos deciden Jueves.
+			\begin{center}
+ 				\begin{game}{2}{2}[\textbf{A}][\textbf{B}]
+                  				\>$H$         \>$L$\\
+        			$H$       \>$X,X$       \>$X,-5$\\
+        			$L$       \>$-5,X$       \>$-5+\tau,-5+\tau$
+				\end{game} 
+			\end{center} donde $X \in [6,12]$.
+		\end{enumerate}
+	\end{enumerate}
+\end{enumerate}
+
+\underline{Se le pide responder lo siguiente:}
+\begin{enumerate}
+	\item ¿Cu\'antas historias terminales y no terminales existen?
+	\item Asuma $\tau = 0$ y obtenga el/los equilibrios perfectos en subjuegos para todos los valores de $W$ y $X$.
+	\item Asuma $\tau = 0$ y $X=6$ e imagine que el director del magister puede seleccionar un equilibrio entre equilibrios\footnote{Lo cual es solo relevante si existen equilibrios m\'ultiples}. En ese sentido, como su respuesta cambia bajo las siguientes reglas de selecci\'on:
+	\begin{enumerate}
+		\item Equilibrio con mayor utilidad para el Profesor A.
+		\item Equilibrio tal que la suma de utilidades es mayor.
+	\end{enumerate}
+	\item Asuma que $X=6$ e imagine que el director del magister desea (tomando en cuenta peticiones de estudiantes) que si los profesores deciden la dificultad de la solemne, esta sea de dificultad m\'as baja (L) de lo normal. Para ello dispone de transferencias no monetarias que puede hacer a ambos profesores ($\tau$). ¿Existe un valor m\'inimo de $\tau$ que asegura que \underline{en equilibrio} los profesores decidan siempre dificulta mas baja (L) de lo normal?
+\end{enumerate}
+
+\section*{Problema 2 - Juegos Estaticos con Informaci\'on Incompleta (20 puntos)}
+
+Dos firmas compiten en un mercado como un duopolio decidiendo precios (Precio oferta -F- o Precio normal -N-). Para poder determinar este valor es importante conocer la curva de demanda, y en particular, la disposicion a pagar por el consumidor. La firma 1 siempre conoce el estado de la demanda, mientras que la firma 2 no. La firma 2 solo sabe que la demanda puede ser alta (H), media (M) o baja (L). Adicionalmente, la probabilidad de que la demanda sea alta es igual a $q$, que sea media igual a $q$ y que sea baja igual a $1-2q$. Esto se traduce en la siguiente informaci\'on
+\begin{itemize}
+	\item Si demanda baja
+			\begin{center}
+ 				\begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  				\>$F$         \>$N$\\
+        			$F$       \>$20,10$       \>$0,-5$\\
+        			$N$       \>$-5,0$       \>$-2,-5$
+				\end{game} 
+			\end{center}	
+	\item Si demanda media
+			\begin{center}
+ 				\begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  				\>$F$         \>$N$\\
+        			$F$       \>$2,0$       \>$3,5$\\
+        			$N$       \>$5,3$       \>$8,5$
+				\end{game} 
+			\end{center} 
+	\item Si demanda baja
+			\begin{center}
+ 				\begin{game}{2}{2}[\textbf{1}][\textbf{2}]
+                  				\>$F$         \>$N$\\
+        			$F$       \>$6,5$       \>$7,10$\\
+        			$N$       \>$10,7$       \>$20,10$
+				\end{game} 
+			\end{center} 
+\end{itemize}
+
+\underline{Se le pide responder lo siguiente:}
+\begin{enumerate}
+	\item Encuentre el o los equilibrios de Nash bayesianos tomando en cuenta que $q \in [0,1/2]$.
+	\item Imagine que la firma 2 compra un software que le permite predecir la demanda tal que fija esta bajo $q=0$, ¿esta firma tiene mayores utilidades que bajo $q=1/2$?
+\end{enumerate}
+
+
+
+\end{document}  

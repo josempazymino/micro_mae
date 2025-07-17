@@ -1,0 +1,180 @@
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{sgamevar, tikz} % Game theory packages
+\usepackage{pgfplots}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+
+\usepackage[spanish]{babel} 
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Microeconom\'ia Aplicada (MAE)}
+\author{Tarea 2 \\ Profesor: Jose Manuel Paz y Mi\~no \\ Ayudante: Vicente Merrill}
+\date{}
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada, Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+% \usepackage{array, xcolor}
+% \usepackage{color,hyperref}
+% \definecolor{clemsonorange}{HTML}{EA6A20}
+% \hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+%===================Startup========================
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+
+Instrucciones:
+\begin{itemize}
+	\item Realizar individualmente o en grupos de 2.
+	\item Escribir en latex.
+	\item Entrega: Viernes 27 de junio; 08:00pm.
+\end{itemize}
+
+
+\section*{Equilibrio Perfecto Bayesiano}
+
+1.- \cite{feltovich2002too} introduce un juego de \textit{contra-se\~nalizacion}. En los juegos de se\~nalizacion vistos en clase (con dos tipos), un equilibrio separador permite a los individuos de tipo alto justamente se\~nalizar lo que son (ya que los de tipo bajo no lo pueden hacer por ser costoso). En un juego con tres tipos: bajo (L), mediano (M) y alto (H) puede ocurrir algo distinto. El individuo M quiere se\~nalizarse para separarse de L, pero H no quisiera se\~nalizar nada si eso puede hacer que se le confunda con M. Esto significa que las se\~nales son usadas solo por individuos M y no por L (por ser costoso) y no por H (no quiere parecer M).\\
+
+A continuaci\'on formalizamos el modelo.\footnote{Basado en la secci\'on 2 del paper. Recomiendo leer y entender esta secci\'on antes de resolver la pregunta.} Imagine qun individuo que va a una entrevista de trabajo. Este individuo puede ser de 3 tipos $\theta$: bajo (L), medio (M) y alto (H). Esta informaci\'on es privada y la naturaleza se la revela al inicio del juego al individuo. En particular, el individuo puede ser L con probabilidad $p$, M con probabilidad $1-2p$ y H con probabilidad $p$. Ser de un tipo $\theta$ esta ligado a un salario $w$. Por lo que si $\theta$ fuese observado L recibe 400, M 700 y H 900 como salarios $w$ correspondientes. En espec\'ifico se tiene la siguiente secuencia de eventos:
+\begin{enumerate}
+	\item La Naturaleza elige el tipo $\theta \in \{L,M,H\}$ bajo distintas probabilidades (que son conocidas por todos).
+	\item El entrevistado observa $\theta$ y decide si envia una se\~nal $s$ (decirle al entrevistador que \textit{obtuvo notas altas en Microeconomia Aplicada del MAE}). Mandar estar se\~nal tiene un costo $C$, pero este es 0 para M y H y es 350 para L.
+	\item El entrevistador recibe la se\~nal $s$ y tambi\'en obtiene una carta de recomendaci\'on del Doctor Paz y Mi\~no. Este sujeto puede escribir una carta $c$ positiva o negativa dependiendo del tipo entrevistado tal que $Prob(\text{Carta Buena}|\theta = L) = 0.0$, $Prob(\text{Carta Buena}|\theta = M) = 0.5$ y $Prob(\text{Carta Buena}|\theta = H) = 1.0$. Esta carta es \textit{ex\'ogena} ya que no se puede modificar y solo depende del tipo que eligi\'o la Naturaleza. El entrevistador usa la se\~nal $s$ y la carta $c$ para inferir que tipo de individuo es el entrevistado. Es decir, forma una creencia $\mu$ sobre quien es. De acuerdo a esta creencia decide si contrata o no al individuo. Entonces
+	\begin{align*}
+		\mu(\theta|s,c) = \frac{ Prob(c|\theta) \times Prob(\theta|s) \times Prob(\theta) }{ \sum_{\theta'} Prob(c|\theta') \times Prob(\theta'|s) \times Prob(\theta') }
+	\end{align*} donde $\mu$ es la probabilidad de ser $\theta$ dado valores especificos de $s$ y $c$.
+	\item Cada tipo del entrevistado recibe $E_{\mu}(w) - C$ como pago. Para simplificar vamos a asumir que el entrevistador tiene como pago de no contratar 0, por lo que si el salario $w$ corresponde a productividad en la empresa, siempre va a querer contratar al entrevistado.\footnote{En concreto, no nos interesa la decision de contratar o no. Es decir, el entrevistador es un jugador pasivo que solo actualiza creencia bayesianamente y que con eso afecta los pagos del entrevistado.}
+\end{enumerate}
+
+Por lo tanto se pregunta.
+\begin{enumerate}
+	\item Indique si existe un equilibrio con \textit{contra-se\~nalizaci\'on} donde el tipo L no manda se\~nal, el tipo M si manda se\~nal y el tipo H no manda se\~nal. De existir, para qu\'e valores de $p$ esto ocurre.\footnote{Hint: Lo m\'as importante es saber como se forma $\mu$ cuando cada tipo se\~naliza o no. Con eso uno puede calcular el beneficio esperado de cada tipo y asi los incentivos a querer implementar la estrategia descrita o no. El entrevistador es pasivo y siempre contrata, por lo que no lo modelamos.}
+	\item Imagine que al problema anterior se le hace la siguiente modificaci\'on: el costo de se\~nalizar para el tipo M es igual $C^{M}>0$. ¿Existe un valor de $C^{M}$ y $p$ tal que se pueda implementar la siguiente estrategia: L no se\~naliza, M no se\~naliza y H si se\~naliza?
+	\item Discuta intuitivamente los resultados de las preguntas 1 y 2. ¿C\'omo influye $p$ en los resultados? ¿Y $C^{M}$?
+\end{enumerate}
+
+
+\section*{Juegos Repetidos Infinitos}
+
+2.- Se trata de modelar la relaci\'on entre dos fuerzas pol\'iticas de un pa\'is. El partido oficialista (1) y el partido oposici\'on (2). En particular, 1 puede proponer una pol\'itica $z_{t}$ dura (H) o suave (S); mientras que 2 decide como respuesta $r_{t}$ aceptar esta pol\'itica (C) o preparar manifestaciones (M). Todo esto se da en el marco de un juego repetido infinito. A fin de clarificar el desarrollo del juego, se asume que en un periodo especifico $t$ ocurre lo siguiente:
+\begin{enumerate}
+	\item 1 decide $z_{t}$.
+	\item 2 observa $z_{t}$ y decide $r_{t}$.
+	\item Dados $z_{t}$ y $r_{t}$, existe una probabilidad $\theta(z_{t},r_{t})$ de que efectivamente ocurran manifestaciones (U). Y una probabilidad $1-\theta(z_{t},r_{t})$ de que no (N). Entonces la naturaleza genera $y_{t} \in \{U,N\}$ al final del periodo $t$.
+\end{enumerate}
+
+Lo cual se traduce en el siguiente juego extensivo (en un periodo $t$)\footnote{Note que los pagos finales no dependen de $\theta$.}
+\begin{center}
+	\begin{tikzpicture}[scale=1.5,font=\footnotesize] 
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw, inner sep=1.5,fill=black},
+hollow node/.style={circle,draw, inner sep=1.5}
+}
+% Specify spacing for each level of the tree
+\tikzstyle{level 1} = [level distance=10mm,sibling distance=25mm]
+\tikzstyle{level 2} = [level distance=10mm,sibling distance=15mm]
+% The Tree
+\node(0)[solid node, label=above:{$1$}]{}
+child{node(1)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(5,1)$}]{}
+edge from parent node[left]{$C$}}
+child{node[hollow node, label=below:{$(2,2)$}]{}
+edge from parent node[right]{$M$}}
+edge from parent node[left,xshift=-3]{$H$}
+}
+child{node(2)[solid node, label=above:{$2$}]{}
+child{node[hollow node, label=below:{$(3,3)$}]{}
+edge from parent node[left]{$C$}}
+child{node[hollow node, label=below:{$(0,4)$}]{}
+edge from parent node[right]{$M$}}
+edge from parent node[right,xshift=3]{$S$}
+};
+\end{tikzpicture}
+\end{center}
+
+Adicionalmente, se tienen los siguientes valores de $\theta$:
+\begin{align*}
+		\theta(z_{t},r_{t}) = \begin{cases}
+		0.2 \text{ si } z_{t} = H, r_{t} = C \\
+		0.9 \text{ si } z_{t} = H, r_{t} = M \\
+		0.1 \text{ si } z_{t} = S, r_{t} = C \\
+		0.6 \text{ si } z_{t} = S, r_{t} = M 
+	\end{cases}
+\end{align*}
+
+Por lo tanto, lo observable para ambos jugadores se puede resumir en la definici\'on de historias: $h^{0} = \emptyset$, $h^{1} = \left((z_{0}, r_{0}, y_{0})\right)$ y asi sucesivamente tal que $h^{t} = \left((z_{0}, r_{0}, y_{0}), \dots, (z_{t-1}, r_{t-1}, y_{t-1}) \right)$. Los jugadores van a decidir establecer una estrategia de gatillo pero que \underline{solo} va a dependen del valor de $y_{t}$ y no de las acciones espec\'ificas que decidieron. Es decir:
+\begin{align*}
+	S_{1}^{0}(\emptyset) &= S \\
+	S_{2}^{0}(\emptyset) &= C \\
+	S_{1}^{t}(h^{t}) &= \begin{cases}
+		S \text{ si } h^{t} \text{ incluye } y_{t-1} = N \\
+		H \text{ de otro modo}
+	\end{cases}\\
+	S_{2}^{t}(h^{t}) &= \begin{cases}
+		C \text{ si } h^{t} \text{ incluye } y_{t-1} = N \\
+		M \text{ de otro modo}
+	\end{cases}	
+\end{align*}
+
+Por lo tanto se pregunta.
+\begin{enumerate}
+	\item Diga si la estrategia gatillo es un equilibrio perfecto en subjuegos para los siguientes valores de $\delta$ : 0.25, 0.50 y 0.95.
+	\item Asuma que los valores de $\theta(z_{t},r_{t})$ sufren la siguiente modificaci\'on
+	\begin{align*}
+		\theta(z_{t},r_{t}) = \begin{cases}
+		0.2 \text{ si } z_{t} = H, r_{t} = C \\
+		1.0 \text{ si } z_{t} = H, r_{t} = M \\
+		0.0 \text{ si } z_{t} = S, r_{t} = C \\
+		0.6 \text{ si } z_{t} = S, r_{t} = M 
+	\end{cases}
+	\end{align*} indique si la estrategia de gatillo es un equilibrio perfecto en subjuegos para los siguientes valores de $\delta$ : 0.25, 0.50 y 0.95.
+	\item Discuta intuitivamente como se comparan las preguntas 1 y 2. Es decir, como los cambios en $\theta$ modifican tanto el valor presente de cooperar (implementar la estrategia gatillo), como el valor presente de deviarse (desviarse de la estrategia gatillo).
+\end{enumerate}
+
+\bibliographystyle{ecca}
+\bibliography{references_micro_mae}
+
+
+
+\end{document}  

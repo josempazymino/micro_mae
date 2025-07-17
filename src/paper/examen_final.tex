@@ -1,0 +1,157 @@
+
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in,headheight=3ex,headsep=3ex]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumerate}
+%\usepackage{enumitem}
+\usepackage{sgamevar, tikz} % Game theory packages
+\usepackage{pgfplots}
+
+\usepackage{sgamevar, tikz} % Game theory packages
+\usetikzlibrary{trees, calc} % For extensive form games
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify Course title, instructor name, semester here %%%%%%%%
+
+\title{Microeconom\'ia Aplicada (MAE)}
+\author{Examen Final \\ Profesor: Jose Manuel Paz y Mi\~no \\ Ayudante: Vicente Merrill}
+\date{}
+
+\usepackage[spanish]{babel} 
+
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[sc]{mathpazo}
+\linespread{1.05} % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{fancyhdr,lastpage}
+\usepackage{url}
+\pagestyle{fancy}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{layout}
+
+\lhead{}
+\chead{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Modify header here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rhead{\footnotesize Microeconom\'ia Aplicada, Oto\~no 2025}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch this %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+% \usepackage{array, xcolor}
+% \usepackage{color,hyperref}
+% \definecolor{clemsonorange}{HTML}{EA6A20}
+% \hypersetup{colorlinks,breaklinks,linkcolor=clemsonorange,urlcolor=clemsonorange,anchorcolor=clemsonorange,citecolor=black}
+
+%===================Startup========================
+\begin{document}
+
+\maketitle
+
+\blankline
+
+\setlength{\parindent}{0pt}.
+
+\begin{itemize}
+	\item Pueden usar apuntes en papel. No se aceptan laptops, tablets, etc.
+	%\item Tienen 2 horas para hacer el examen final.
+	%\item Use los . Los conceptos lo guiar\'an a la respuesta.
+	\item Es preferible escribir algo a nada. Si se demora mucho, haga supuesto y/o simplifique el problema.
+\end{itemize}
+
+\section*{Problema 1 - Equilibrio Perfecto Bayesiano (100 puntos)}
+
+El siguiente problema esta basado en \cite{daley2014market}. Este es una extensi\'on del modelo de se\~nalizaci\'on del mercado laboral visto en clase y tambi\'en similar a lo hecho en la Tarea 2. Queremos plasmar el escenario donde un aplicante a un trabajo puede se\~nalizar su tipo mediante niveles de educaci\'on, pero tambi\'en tiene que tomar un examen con resultado aleatorio. Entonces un empleador no solo ve los niveles educativos, si no tambi\'en las notas de un examen. M\'as detalle a continuaci\'on. Se tienen $2$ jugadores.
+\begin{itemize}
+	\item El Aplicante (a una posici\'on) laboral. Este jugador esta informado privadamente de su tipo $\theta \in\{ \theta_{L}, \theta_{H} \}$. 
+	\item El Empleador. Este observa los niveles de educaci\'on y el resultado del examen. No conoce el tipo del jugador Aplicante (es decir, no observa $\theta$).
+\end{itemize}
+
+A continuaci\'on la secuencia de acciones del juego.
+\begin{enumerate}
+	\item Primero. La Naturaleza determina aleatoriamente el tipo $\theta$ del Aplicante. Esto ocurre con una probabilidad $\text{Prob}(\theta_{L}) = \text{Prob}(\theta_{H}) = 0.5$.
+	\item Segundo. El Aplicante decide una acci\'on $x \in \{0, 1\}$ donde $0$ indica que no estudia, mientras que $1$ de que si estudia. Adicionalmente, el Aplicante rinde un examen y obtiene una nota $g \in \{\text{baja}, \text{alta}\}$. La probabilidad de obtener una nota depende del tipo del Aplicante. Entonces $\text{Prob}(g = \text{alta}|\theta_{H}) = 0.75$ y $\text{Prob}(g = \text{alta}|\theta_{L}) = 0.50$.
+	\item Tercero. El Empleador observa $(x,g)$, actualiza creencias y hace oferta. La actualizaci\'on de creencias se hace de acuerdo a
+	\begin{align*}
+		\mu(\theta_{i}| x,g) = \frac{ \text{Prob}(\theta_{i}) \times \text{Prob}(x|\theta_{i}) \times \text{Prob}(g|x,\theta_{i}) }{ \sum_{\theta_{i}'} \text{Prob}(\theta_{i}') \times \text{Prob}(x|\theta_{i}') \times \text{Prob}(g|x,\theta_{i}')   }
+	\end{align*} para un determinado tipo $\theta_{i}$ y para un valor $x$ y $g$ espec\'ificos. Si el Empleador conociera el tipo del Aplicante le pagar\'ia $W_{H} = 5$ si fuera tipo $\theta_{H}$ y $W_{L} = 3$ si fuera tipo $\theta_{L}$. Por lo tanto, el salario esperado para valores $(x,g)$ es 
+	\begin{align*}
+		E(w|x,g) = \sum_{i'} W_{i'} \times \mu( \theta_{i'}|x,g )
+	\end{align*} y la utilidad esperada para el individuo de tipo $\theta_{i}$ por seguir una estrategia espec\'ifica $x$ es
+	\begin{align*}
+		U(\theta_{i}|x) = \sum_{g} \text{Prob}(g|\theta_{i}) \times E(w|x,g) - C(x,\theta_{i})
+	\end{align*} donde $C(x,\theta_{i}) = x C_{i}$ con $C_{L} = 2$ y $C_{H} = 0.8$
+
+	\item Cuarto. El Empleador siempre quiere contratar al Aplicante.
+\end{enumerate}
+
+\underline{Se le pide responder lo siguiente:}
+\begin{enumerate}
+	%\item Asuma que no existe el examen. Es decir, no hay variable $g$. Indique si el equilibrio separador donde el tipo alto $H$ decide estudiar $E$ y el tipo bajo decide no estudiar $NE$ es un Equilibrio Perfecto Bayesiano.
+	\item Indique si el equilibrio separador donde el tipo alto $H$ decide estudiar ($x=1$) $E$ y el tipo bajo decide no estudiar ($x=0$) $NE$ es un Equilibrio Perfecto Bayesiano.
+	\item Asuma que la educaci\'on $x$ modifica la performance en el examen. Es decir,
+	\begin{align*}
+		\text{Prob}(g = \text{alta}|x,\theta_{H}) = & 0.75 + 0.2 \times x \\
+		\text{Prob}(g = \text{alta}|x,\theta_{L}) = & 0.50 + 0.1 \times x 
+	\end{align*} indique si el equilibrio separador donde el tipo alto $H$ decide estudiar ($x=1$) $E$ y el tipo bajo decide no estudiar ($x=0$) $NE$ es un Equilibrio Perfecto Bayesiano.
+	\item Compare sus respuestas 1 y 2. ¿En qu\'e difieren?
+\end{enumerate}
+
+\section*{Problema 2 - Juegos Repetidos Infinitos (100 puntos)}
+
+El siguiente problema esta basado en \cite{yared2010dynamic}. Tenemos dos paises. Un pais agresor (AA) y pais no agresor (NN). AA tiene la capacidad de declarar guerra o paz a NN (dado por $w_{t}$). Si decide paz espera que NN haga concesiones que lo beneficien (dado por $x_{t}$). NN internamente (y privadamente), y en cada periodo observa su capacidad de hacer estas concesiones (dada por $c_{t}$). Esto se da dentro de un juego repetido infinito donde en cada periodo,
+\begin{enumerate}
+	\item AA decide $w_{t} = 1$ (Guerra) o $w_{t} = 0$ (Paz). Si $w_{t} = 1$ entonces los pagos del periodo son $(0.5,-5)$.
+	\item Si $w_{t} = 0$, entonces la Naturaleza aleatoriamente da la variable $c_{t} = \{1,0\}$ donde $1$ indica que para NN hacer concesiones es barato, mientras que $0$ que es muy caro. Adicionalmente $\text{Prob}(c=1) = 0.5$ .
+	\item Si $c_{t} = 1$. NN puede decidir no hacer concesiones $x_{t} = 0$ y esto resulta en pagos $(0,0)$. Si hace concesiones $x_{t} = 1$ esto resulta en pagos $(1,-1)$.
+	\item Si $c_{t} = 0$ NN puede decidir no hacer concesiones $x_{t} = 0$ y esto results en pagos $(0,0)$. Si hace concesiones $x_{t} = 1$ esto resulta en pagos $(1,-100)$.
+\end{enumerate}
+
+Algunas precisiones adicionales. AA no observa $c_{t}$. Por lo tanto, cuando NN no da concesiones (es decir, $x_{t}=0$) deber\'ia de formar creencia sobre cual es el valor de $c_{t}$. No vamos a profundizar en esta formaci\'on de creencias, pero solo decir que AA cree que lo que hace NN refleja certeramente el valor de $c_{t}$. Para formalizar el modelo, definamos lo que es una historia (p\'ublica) y estrategias. Una historia es $h^{t} = \left( (w_{0},x_{0}), \dots (w_{t-1},x_{t-1}) \right)$. Entonces, las estrategias para cada jugador son una secuencia de funciones $S_{AA} = \left( s_{AA}^{0}, \dots s_{AA}^{t}, \dots \right)$ y $S_{NN} = \left( s_{NN}^{0}, \dots s_{NN}^{t}, \dots \right)$. En particular,
+\begin{align*}
+	s_{AA}^{t}(h^{t}): & H^{t} \rightarrow \{0,1\} \\
+	s_{NN}^{t}(h^{t}, c_{t}): & H^{t} \times \{0,1\} \rightarrow \{0,1\} 
+\end{align*} entonces podemos definir las estrategias de gatillo como
+\begin{align*}
+	s_{AA}^{0}(\emptyset) = & 0 \\
+	s_{AA}^{t}(h^{t}) = & \begin{cases}
+		0 \text{ si } (w_{t-1} = 0, x_{t-1} = 1) \\
+		1 \text{ de otro modo } 
+	\end{cases} 
+\end{align*} lo cual significa que AA empieza ofreciendo paz $(w_{0} = 0)$. Y sigue ofreciendo paz $w_{t} = 0$ si en el periodo anterior cuando ofrecio paz $w_{t-1} = 0$, NN decidio dar concesiones $x_{t-1} = 1$. Si esto no ocurre, AA declara guerra en todos los periodos futuros. Para NN se tiene lo siguiente,
+\begin{align*}
+	s_{NN}^{0}(\emptyset,c_{0}) = & \begin{cases}
+		1 \text{ si } c_{0} = 1 \\
+		0 \text{ si } c_{0} = 0
+	\end{cases} \\
+	s_{NN}^{t}(h^{t},c_{t}) = & \begin{cases}
+		1 \text{ si } (w_{t-1} = 0, x_{t-1} = 1) \text{ y } c_{t} = 1 \\
+		0 \text{ si } c_{t} = 0
+	\end{cases} 
+\end{align*} donde podemos suponer que $c_{0} = 1$. Lo m\'as relevante es $s_{NN}^{t}(h^{t},c_{t})$. Esta indica que NN seguir\'a cooperando siempre que no haya existido un desv\'io anteriormente (es decir, $(w_{t-1} = 0, x_{t-1} = 1)$) y que hacer concesiones sea barato en ese mismo periodo $c_{t}=1$. De otro modo, decide no hacer concesiones. Notemos que la estrategia de gatillo para NN supone que esta actua honestamente. Es decir, acepta concesiones cuando puede. De otro modo, no las hace. AA de otro modo, no puede observar $c_{t}$. Por lo que debe actuar directamente sobre los valores de $x_{t}$.
+
+\underline{Se le pide responder lo siguiente:}
+\begin{enumerate}
+	\item Dada la estrategia de gatillo se le pide calcular:  i. el valor de seguir la estrategia para NN luego de observar $c_{t}=0$, ii. el valor de seguir la estrategia para NN luego de observar $c_{t}=1$, iii. el valor de seguir la estrategia para NN antes de observar $c_{t}$ y el valor de seguir la estrategia para AA antes de observar $c_{t}$.
+	\item Dada la estrategia de gatillo se observa $c_{t} = 1$, ¿qu\'e condici\'on tiene que cumplirse para que NN desee no desviarse? ¿Se cumple?
+	\item Dada la estrategia de gatillo, ¿qu\'e condici\'on tiene que cumplirse para que AA desee no desviarse? Se cumple?
+	\item Asuma ahora que modificamos la estrategia de gatillo tal que el castigo solo dura un periodo. Es decir, cuando se observa $x_{t} = 0$ el juego continua con guerra en el siguiente periodo \underline{y solo por un periodo}. Luego de este periodo, se regresa a la cooperaci\'on. Reescriba sus respuestas a las preguntas 2 y 3 dada esta nueva estrategia.\footnote{Solo se le pide escribirlas.} Intuitivamente, ¿usted cree que esta nueva estrategia de gatillo hace m\'as posible que se pueda sostener?
+\end{enumerate}
+
+\bibliographystyle{ecca}
+\bibliography{references_micro_mae}
+
+
+\end{document}  
